@@ -1,0 +1,93 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    border-image: initial;
+}
+
+.box {
+    display: flex;
+    width: 10%;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+    border-image: initial;
+}
+
+.mainContainer {
+    display: flex;
+    width: 99%;
+    min-height: 200px;
+    margin: 5px 5px 5px 0.5%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    border-image: initial;
+}
+
+.sideMenu {
+    display: flex;
+    min-height: 200px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray;
+    border-image: initial;
+    margin: 1px;
+}
+
+#firstSideMenu {
+    width: 20%;
+}
+
+#secondSideMenu {
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    height: 20vw;
+    min-width: 300px;
+    min-height: 300px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: blue;
+    border-image: initial;
+    margin: 0.5%;
+}
+
+
+#image {
+    width: 300px;
+    height: 200px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: red;
+    border-image: initial;
+}
+
+#info {
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-image: initial;
+}
