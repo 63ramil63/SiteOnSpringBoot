@@ -8,11 +8,19 @@
 </head>
 <body>
     <div class="header">
-        <div class="box">Сайт</div>
-        <div class="box">Главная</div>
-        <div class="box" th:text="${username}"></div>
-        <div class="box"><a href="/registerForm">Войти</a></div>
-        <div class="box">Выйти</div>
+        <div class="headerL">
+            <div class="box">Сайт</div>
+            <div class="box">Главная</div>
+        </div>
+        <div class="headerR">
+            <div class="box" th:text="${username}"></div>
+            <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
+            <div class="box" th:if="${isAuth}">
+                <form method="post" th:action="@{/logout}">
+                    <input type="submit" value="Выйти">
+                </form>
+            </div>
+        </div>
     </div>
     <div class="mainContainer">
         <div class="sideMenu" id="firstSideMenu"></div>

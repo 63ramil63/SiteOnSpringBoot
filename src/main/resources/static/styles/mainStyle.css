@@ -10,12 +10,22 @@
     border-style: solid;
     border-color: black;
     border-image: initial;
+    justify-content: space-between;
+}
+
+.headerL {
+    display: flex;
+    flex-direction: row;
+}
+
+.headerR {
+    display: flex;
+    flex-direction: row;
 }
 
 
 .box {
     display: flex;
-    width: 10%;
     height: 50px;
     align-items: center;
     justify-content: center;

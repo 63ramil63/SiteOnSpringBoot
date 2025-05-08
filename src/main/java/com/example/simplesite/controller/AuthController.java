@@ -26,7 +26,7 @@ public class AuthController {
     public String register(@ModelAttribute(name = "user") User user) {
         if (user.getPassword().equals(user.getConfirmPassword())) {
             userService.registerUser(user);
-            return "main";
+            return "redirect:/market";
         }
         return "login";
     }

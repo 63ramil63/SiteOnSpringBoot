@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/market", true))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
+                        .logoutSuccessUrl("/market")
                         .permitAll());
         return http.build();
     }
