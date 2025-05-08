@@ -1,7 +1,6 @@
 package com.example.simplesite.service.impl;
 
 import com.example.simplesite.model.Order;
-import com.example.simplesite.model.Product;
 import com.example.simplesite.repository.OrderRepository;
 import com.example.simplesite.service.OrderService;
 import lombok.AllArgsConstructor;
