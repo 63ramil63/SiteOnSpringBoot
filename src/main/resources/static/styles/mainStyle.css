@@ -3,7 +3,6 @@
     margin: 0px;
     padding: 0px;
 }
-
 .header {
     display: flex;
     width: 100%;
@@ -12,6 +11,7 @@
     border-color: black;
     border-image: initial;
 }
+
 
 .box {
     display: flex;

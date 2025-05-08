@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 //Указываем у JpaRep класс объекта и тип его первичного ключа
-public interface UserRepository extends JpaRepository<User, String> {
-    void findByEmail(String email);
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
     void deleteByEmail(String email);
 }

@@ -1,11 +1,12 @@
 package com.example.simplesite.service;
 
 import com.example.simplesite.model.User;
-import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
-@Service
 public interface UserService {
-    void registerUser(User user);
-    void findUser(String email);
+    //следит за тем, чтобы действия при работе с базой данных выполнялись как надо: или все, или ничего
+    @Transactional
+    boolean registerUser(User user);
+    User findUser(String email);
     void deleteUser(String email);
 }
