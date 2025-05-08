@@ -13,7 +13,7 @@
   <div class="box">Выйти</div>
 </div>
 <div class="mainContainer">
-  <form name="user" method="post" th:action="@{/login}">
+  <form name="user" method="post" th:action="@{/login}" th:object="${user}">
     <label for="email">email</label>
     <input type="email" name="email" id="email">
     <label for="pass">password</label>

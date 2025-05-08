@@ -31,14 +31,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/registerForm", "/market").permitAll()
+                        .requestMatchers("/register", "/registerForm", "/market", "/", "/login").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureForwardUrl("/registerForm")
-                        .usernameParameter("username")
+                        .usernameParameter("email")
                         .passwordParameter("password")
-                        .successForwardUrl("/market"))
+                        .defaultSuccessUrl("/market", true))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .permitAll());
