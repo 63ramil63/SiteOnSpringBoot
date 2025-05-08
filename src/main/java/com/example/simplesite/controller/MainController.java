@@ -1,6 +1,5 @@
 package com.example.simplesite.controller;
 
-import com.example.simplesite.model.User;
 import com.example.simplesite.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

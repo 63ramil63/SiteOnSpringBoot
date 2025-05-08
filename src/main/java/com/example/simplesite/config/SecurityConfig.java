@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         //доступ к страницам и ресурсам проекта
-                        .requestMatchers("/register", "/registerForm", "/market", "/", "/login").permitAll()
+                        .requestMatchers("/register", "/registerForm", "/market", "/", "/login", "/adminPanel", "/addProduct").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll())
                 .formLogin(form -> form
                         //настройка формы для захода в аккаунт

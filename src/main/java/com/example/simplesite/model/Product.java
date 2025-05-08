@@ -1,8 +1,6 @@
 package com.example.simplesite.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -10,10 +8,11 @@ import lombok.Data;
 @Table(name = "Products")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String name;
     private String imgSrc;
-    private float price;
+    private int price;
     private String type;
     private String companyName;
 }

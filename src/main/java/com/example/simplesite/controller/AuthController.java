@@ -40,7 +40,7 @@ public class AuthController {
             userService.registerUser(user);
             return "redirect:/market";
         }
-        return "login";
+        return "redirect:/registerForm";
     }
 
     @GetMapping("/login")
