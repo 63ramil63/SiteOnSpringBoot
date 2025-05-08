@@ -1,13 +1,9 @@
 package com.example.simplesite.config;
 
-import com.example.simplesite.service.impl.UserDetailsServiceImpl;
-import com.example.simplesite.service.impl.UserServiceImpl;
-import lombok.AllArgsConstructor;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,11 +27,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
+                        //доступ к страницам и ресурсам проекта
                         .requestMatchers("/register", "/registerForm", "/market", "/", "/login").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll())
                 .formLogin(form -> form
+                        //настройка формы для захода в аккаунт
                         .loginPage("/login")
                         .failureForwardUrl("/registerForm")
+                        //параметры указанные на странице html по атрибуту name
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/market", true))
