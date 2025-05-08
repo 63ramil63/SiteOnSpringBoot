@@ -101,3 +101,30 @@
     border-color: black;
     border-image: initial;
 }
+
+
+/* only to login/register page */
+
+.formContainer {
+    border: 2px solid blue;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.form {
+    margin-top: 50px;
+    width: 20vw;
+    background: 1px solid yellow;
+}
+
+.formContainer div {
+    border: 2px solid green;
+    width: 100%;
+    height: 2em;
+}
+
+.formContainer input {
+    height: 100%;
+    width: 100%;
+}
