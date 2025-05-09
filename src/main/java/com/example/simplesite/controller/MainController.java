@@ -22,9 +22,12 @@ public class MainController {
         if (authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAuth", true);
+            boolean isAdmin = authentication.getAuthorities().stream().anyMatch(stream -> stream.getAuthority().equals("ADMIN"));
+            model.addAttribute("isAdmin", isAdmin);
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);
+            model.addAttribute("isAdmin", false);
         }
         return "main";
     }

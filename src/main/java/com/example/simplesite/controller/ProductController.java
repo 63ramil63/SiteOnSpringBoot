@@ -1,6 +1,7 @@
 package com.example.simplesite.controller;
 
 import com.example.simplesite.model.Product;
+import com.example.simplesite.model.Role;
 import com.example.simplesite.service.impl.ProductServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -21,9 +22,12 @@ public class ProductController {
         if (authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
+            boolean isAdmin = authentication.getAuthorities().stream().anyMatch(stream -> stream.getAuthority().equals("ADMIN"));
+            model.addAttribute("isAdmin", isAdmin);
         } else {
             model.addAttribute("isAuth", false);
             model.addAttribute("username", "Не авторизован");
+            model.addAttribute("isAdmin", false);
         }
     }
 
