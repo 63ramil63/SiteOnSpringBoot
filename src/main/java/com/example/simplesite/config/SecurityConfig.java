@@ -28,7 +28,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         //доступ к страницам и ресурсам проекта
-                        .requestMatchers("/register", "/registerForm", "/market", "/", "/login").permitAll()
+                        .requestMatchers("/register", "/registerForm", "/login").anonymous()
+                        .requestMatchers("/market", "/").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
                         .requestMatchers("/order").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/adminPanel", "/addProduct").hasAuthority("ADMIN"))
@@ -44,6 +45,7 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/market")
                         .permitAll());
+
         return http.build();
     }
 }
