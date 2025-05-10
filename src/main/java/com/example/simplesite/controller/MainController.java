@@ -19,16 +19,16 @@ public class MainController implements PageAttributeSetter {
     private final UserServiceImpl userService;
     private final ProductServiceImpl productService;
 
-    private boolean isAuth(Authentication authentication) {
+    public boolean isAuth(Authentication authentication) {
         return authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
     };
 
-    private boolean isAdmin(Authentication authentication) {
+    public boolean isAdmin(Authentication authentication) {
         return authentication.getAuthorities().stream().anyMatch(element -> element.getAuthority().equals("ADMIN"));
     }
 
     @Override
-    public void setHeaderAttribute(Model model, Authentication authentication) {
+    public void setAttribute(Model model, Authentication authentication) {
         if (isAuth(authentication)) {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
@@ -38,18 +38,14 @@ public class MainController implements PageAttributeSetter {
             model.addAttribute("isAuth", false);
             model.addAttribute("isAdmin", false);
         }
-    }
-
-    @Override
-    public void setBodyAttribute(Model model) {
         model.addAttribute("products", productService.getAllProducts());
     }
+
 
     @GetMapping("/market")
     public String market(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        setHeaderAttribute(model, authentication);
-        setBodyAttribute(model);
+        setAttribute(model, authentication);
         return "main";
     }
 

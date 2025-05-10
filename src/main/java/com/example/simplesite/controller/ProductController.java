@@ -1,5 +1,6 @@
 package com.example.simplesite.controller;
 
+import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.model.Product;
 import com.example.simplesite.model.Role;
 import com.example.simplesite.service.impl.ProductServiceImpl;
@@ -14,28 +15,39 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @AllArgsConstructor
-public class ProductController {
+public class ProductController implements PageAttributeSetter {
 
     private final ProductServiceImpl productService;
 
-    private void setHeaderButtons(Authentication authentication, Model model) {
-        if (authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+    @Override
+    public boolean isAuth(Authentication authentication) {
+        return authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+    }
+
+    @Override
+    public boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream().anyMatch(stream -> stream.getAuthority().equals("ADMIN"));
+    }
+
+    @Override
+    public void setAttribute(Model model, Authentication authentication) {
+        if (isAuth(authentication)) {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
-            boolean isAdmin = authentication.getAuthorities().stream().anyMatch(stream -> stream.getAuthority().equals("ADMIN"));
-            model.addAttribute("isAdmin", isAdmin);
+            model.addAttribute("isAdmin", isAdmin(authentication));
         } else {
             model.addAttribute("isAuth", false);
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAdmin", false);
         }
+        model.addAttribute("product", new Product());
     }
+
 
     @GetMapping("/adminPanel")
     public String adminPanel(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        setHeaderButtons(authentication, model);
-        model.addAttribute("product", new Product());
+        setAttribute(model, authentication);
         return "adminPanel";
     }
 

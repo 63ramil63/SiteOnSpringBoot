@@ -19,29 +19,24 @@ public class AuthController implements PageAttributeSetter {
 
     private final UserServiceImpl userService;
 
-    private boolean isAuth(Authentication authentication) {
+    public boolean isAuth(Authentication authentication) {
         return authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
     }
 
-    private boolean isAdmin(Authentication authentication) {
+    public boolean isAdmin(Authentication authentication) {
         return authentication.getAuthorities().stream().anyMatch(element -> element.getAuthority().equals("ADMIN"));
     }
 
     @Override
-    public void setHeaderAttribute(Model model, Authentication authentication) {
+    public void setAttribute(Model model, Authentication authentication) {
         model.addAttribute("isAuth", isAuth(authentication));
-    }
-
-    @Override
-    public void setBodyAttribute(Model model) {
         model.addAttribute("user", new User());
     }
 
     @GetMapping("/registerForm")
     public String registerForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        setHeaderAttribute(model, authentication);
-        setBodyAttribute(model);
+        setAttribute(model, authentication);
         return "register";
     }
 
@@ -57,8 +52,7 @@ public class AuthController implements PageAttributeSetter {
     @GetMapping("/login")
     public String login(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        setHeaderAttribute(model, authentication);
-        setBodyAttribute(model);
+        setAttribute(model, authentication);
         return "login";
     }
 }
