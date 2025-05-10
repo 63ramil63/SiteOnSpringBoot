@@ -1,5 +1,7 @@
 package com.example.simplesite.controller;
 
+import com.example.simplesite.attributesetter.PageAttributeSetter;
+import com.example.simplesite.service.impl.ProductServiceImpl;
 import com.example.simplesite.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -12,23 +14,42 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @AllArgsConstructor
-public class MainController {
+public class MainController implements PageAttributeSetter {
 
     private final UserServiceImpl userService;
+    private final ProductServiceImpl productService;
 
-    @GetMapping("/market")
-    public String market(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-            model.addAttribute("username", authentication.getName());
+    private boolean isAuth(Authentication authentication) {
+        return authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+    };
+
+    private boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream().anyMatch(element -> element.getAuthority().equals("ADMIN"));
+    }
+
+    @Override
+    public void setHeaderAttribute(Model model, Authentication authentication) {
+        if (isAuth(authentication)) {
             model.addAttribute("isAuth", true);
-            boolean isAdmin = authentication.getAuthorities().stream().anyMatch(stream -> stream.getAuthority().equals("ADMIN"));
-            model.addAttribute("isAdmin", isAdmin);
+            model.addAttribute("username", authentication.getName());
+            model.addAttribute("isAdmin", isAdmin(authentication));
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);
             model.addAttribute("isAdmin", false);
         }
+    }
+
+    @Override
+    public void setBodyAttribute(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
+    }
+
+    @GetMapping("/market")
+    public String market(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        setHeaderAttribute(model, authentication);
+        setBodyAttribute(model);
         return "main";
     }
 
@@ -36,5 +57,4 @@ public class MainController {
     public RedirectView home() {
         return new RedirectView("/market");
     }
-
 }

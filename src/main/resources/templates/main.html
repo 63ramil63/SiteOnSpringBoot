@@ -26,11 +26,25 @@
     <div class="mainContainer">
         <div class="sideMenu" id="firstSideMenu"></div>
         <div class="sideMenu" id="secondSideMenu">
-            <div class="card">
-                <img src="https://c.dns-shop.ru/thumb/st1/fit/500/500/e250eee49212d4e4e0446ef021689efd/02fb6db740b61251af139ba2ed2e8ee24384ab69a8c4f80b1e5d54bdd8392b54.png.webp" id="image">
-                <div id="info">
-                    <h2>Text</h2>
-                    <h3>Price</h3>
+            <div class="card" th:each="product: ${products}">
+                <div class="imgContainer">
+                    <img th:src="${product.imgSrc}" id="image">
+                </div>
+                <div class="info">
+                    <div class="textInfo">
+                        <a th:text="${product.name}"></a>
+                    </div>
+                    <div class="cardBottom">
+                        <div>
+                            <a th:text="${product.price}"></a>
+                        </div>
+                        <div>
+                            <form name="orderProduct" method="post" th:action="@{/order}">
+                                <input type="hidden" name="productId" th:value="${product.Id}">
+                                <input type="submit" value="buy">
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

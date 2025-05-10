@@ -28,8 +28,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         //доступ к страницам и ресурсам проекта
-                        .requestMatchers("/register", "/registerForm", "/market", "/", "/login", "/adminPanel", "/addProduct").permitAll()
-                        .requestMatchers("/styles/**", "/images/**").permitAll())
+                        .requestMatchers("/register", "/registerForm", "/market", "/", "/login").permitAll()
+                        .requestMatchers("/styles/**", "/images/**").permitAll()
+                        .requestMatchers("/order").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/adminPanel", "/addProduct").hasAuthority("ADMIN"))
                 .formLogin(form -> form
                         //настройка формы для захода в аккаунт
                         .loginPage("/login")

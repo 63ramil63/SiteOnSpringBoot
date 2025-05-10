@@ -71,7 +71,7 @@
     flex-direction: column;
     width: 15vw;
     height: 20vw;
-    min-width: 300px;
+    min-width: 240px;
     min-height: 300px;
     border-width: 1px;
     border-style: solid;
@@ -80,26 +80,49 @@
     margin: 0.5%;
 }
 
-
-#image {
-    width: 300px;
+.imgContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: 3px solid black;
     height: 200px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: red;
-    border-image: initial;
 }
 
-#info {
+#image {
+    width: 200px;
+    height: 200px;
+    border-width: 1px;
+}
+
+.info {
     height: 180px;
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 0px;
+    padding: 5px;
     border-width: 1px;
     border-style: solid;
     border-color: black;
     border-image: initial;
+}
+
+.textInfo {
+    width: 100%;
+    font-size: 18px;
+    border: 1px solid green;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.cardBottom {
+    display: flex;
+    width: 100%;
+    min-height: 50px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 

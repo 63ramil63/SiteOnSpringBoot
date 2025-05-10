@@ -1,5 +1,6 @@
 package com.example.simplesite.controller;
 
+import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.model.User;
 import com.example.simplesite.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -14,23 +15,33 @@ import org.springframework.security.core.Authentication;
 
 @Controller
 @AllArgsConstructor
-public class AuthController {
+public class AuthController implements PageAttributeSetter {
 
     private final UserServiceImpl userService;
 
-    private void setHeaderButtons(Authentication authentication, Model model) {
-        if (authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
-            model.addAttribute("isAuth", true);
-        } else {
-            model.addAttribute("isAuth", false);
-        }
+    private boolean isAuth(Authentication authentication) {
+        return authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+    }
+
+    private boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream().anyMatch(element -> element.getAuthority().equals("ADMIN"));
+    }
+
+    @Override
+    public void setHeaderAttribute(Model model, Authentication authentication) {
+        model.addAttribute("isAuth", isAuth(authentication));
+    }
+
+    @Override
+    public void setBodyAttribute(Model model) {
+        model.addAttribute("user", new User());
     }
 
     @GetMapping("/registerForm")
     public String registerForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        setHeaderButtons(authentication, model);
-        model.addAttribute("user", new User());
+        setHeaderAttribute(model, authentication);
+        setBodyAttribute(model);
         return "register";
     }
 
@@ -38,7 +49,7 @@ public class AuthController {
     public String register(@ModelAttribute(name = "user") User user) {
         if (user.getPassword().equals(user.getConfirmPassword())) {
             userService.registerUser(user);
-            return "redirect:/market";
+            return "redirect:/login";
         }
         return "redirect:/registerForm";
     }
@@ -46,8 +57,8 @@ public class AuthController {
     @GetMapping("/login")
     public String login(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        setHeaderButtons(authentication, model);
-        model.addAttribute("user", new User());
+        setHeaderAttribute(model, authentication);
+        setBodyAttribute(model);
         return "login";
     }
 }
