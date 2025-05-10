@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/register", "/registerForm", "/login").anonymous()
                         .requestMatchers("/market", "/").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
-                        .requestMatchers("/order", "/orders").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/order", "/orders", "/deleteOrder").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/adminPanel", "/addProduct").hasAuthority("ADMIN"))
                 .formLogin(form -> form
                         //настройка формы для захода в аккаунт

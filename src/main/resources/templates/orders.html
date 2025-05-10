@@ -47,6 +47,12 @@
             <td>
               <a th:text="${order.product.price} + 'р.'"></a>
             </td>
+            <td>
+              <form method="post" th:action="@{/deleteOrder}">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <input type="submit" value="Удалить">
+              </form>
+            </td>
           </tr>
         </table>
       </div>

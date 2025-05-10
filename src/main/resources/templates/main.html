@@ -14,6 +14,7 @@
         </div>
         <div class="headerR">
             <div class="box" th:if="${isAdmin}"><a href="/adminPanel">Admin Panel</a></div>
+            <div class="box" th:if="${isAuth}"><a href="/orders">Корзина</a></div>
             <div class="box" th:text="${username}"></div>
             <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
             <div class="box" th:if="${isAuth}">

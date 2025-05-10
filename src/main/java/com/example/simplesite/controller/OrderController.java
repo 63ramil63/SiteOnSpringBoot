@@ -4,6 +4,7 @@ import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.model.User;
 import com.example.simplesite.service.impl.OrderServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -73,5 +74,10 @@ public class OrderController implements PageAttributeSetter {
         return "orders";
     }
 
-
+    @PostMapping("/deleteOrder")
+    @Transactional
+    public String deleteOrder(@RequestParam(name = "orderId") Long orderId) {
+        orderService.deleteOrder(orderId);
+        return "redirect:/orders";
+    }
 }
