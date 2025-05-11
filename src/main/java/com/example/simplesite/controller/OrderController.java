@@ -1,6 +1,7 @@
 package com.example.simplesite.controller;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
+import com.example.simplesite.model.Order;
 import com.example.simplesite.model.User;
 import com.example.simplesite.service.impl.OrderServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -39,8 +42,7 @@ public class OrderController implements PageAttributeSetter {
         return "Email not found";
     }
 
-    @Override
-    public void setAttribute(Model model, Authentication authentication) {
+    private void setHeaderAttribute(Model model, Authentication authentication) {
         if (isAuth(authentication)) {
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
@@ -50,8 +52,22 @@ public class OrderController implements PageAttributeSetter {
             model.addAttribute("isAuth", false);
             model.addAttribute("isAdmin", false);
         }
+    }
+
+    private void setBodyAttribute(Model model, Authentication authentication) {
         String email = getUserEmail(authentication);
-        model.addAttribute("orders", orderService.getOrdersByEmail(email));
+        List<Order> orders = orderService.getOrdersByEmail(email);
+        int count = orders.size();
+        int sum = orders.stream().mapToInt(order -> order.getProduct().getPrice()).sum();
+        model.addAttribute("orders", orders);
+        model.addAttribute("count", count);
+        model.addAttribute("sum", sum);
+    }
+
+    @Override
+    public void setAttribute(Model model, Authentication authentication) {
+        setHeaderAttribute(model, authentication);
+        setBodyAttribute(model, authentication);
     }
 
     @PostMapping("/order")
