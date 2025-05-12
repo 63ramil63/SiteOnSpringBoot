@@ -4,6 +4,7 @@ import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.model.Order;
 import com.example.simplesite.model.User;
 import com.example.simplesite.service.impl.OrderServiceImpl;
+import com.example.simplesite.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.List;
 public class OrderController implements PageAttributeSetter {
 
     private OrderServiceImpl orderService;
+    private UserServiceImpl userService;
 
     @Override
     public boolean isAuth(Authentication authentication) {
@@ -47,6 +49,15 @@ public class OrderController implements PageAttributeSetter {
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
             model.addAttribute("isAuth", true);
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof User) {
+                String email = ((User) principal).getEmail();
+                User user = userService.findUser(email);
+                int cache = user.getCache();
+                model.addAttribute("cache", cache);
+            } else {
+                model.addAttribute("cache", "error");
+            }
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);

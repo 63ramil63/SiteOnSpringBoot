@@ -1,6 +1,7 @@
 package com.example.simplesite.controller;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
+import com.example.simplesite.model.User;
 import com.example.simplesite.service.impl.ProductServiceImpl;
 import com.example.simplesite.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,15 @@ public class MainController implements PageAttributeSetter {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
+            //получаем информацию об авторизированном пользователе
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof User) {
+                String email = ((User) principal).getEmail();
+                User user = userService.findUser(email);
+                model.addAttribute("cache", user.getCache());
+            } else {
+                model.addAttribute("cache", "error");
+            }
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);
