@@ -8,5 +8,7 @@ public interface UserService {
     @Transactional
     boolean registerUser(User user);
     User findUser(String email);
+    @Transactional
+    void updateUserCache(String email, int newCache);
     void deleteUser(String email);
 }

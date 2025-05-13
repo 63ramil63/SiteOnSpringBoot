@@ -17,6 +17,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     private ProductServiceImpl productService;
 
+    public Optional<Order> getOrderById(Long id) {
+        return orderRepository.findById(id);
+    }
+
     @Override
     public List<Order> getOrdersByEmail(String email) {
         return orderRepository.findByUserEmail(email);

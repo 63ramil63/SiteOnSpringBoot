@@ -22,27 +22,31 @@ public class MainController implements PageAttributeSetter {
 
     public boolean isAuth(Authentication authentication) {
         return authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
-    };
+    }
 
     public boolean isAdmin(Authentication authentication) {
         return authentication.getAuthorities().stream().anyMatch(element -> element.getAuthority().equals("ADMIN"));
     }
 
+    public int getCache(Model model, Authentication authentication) {
+        //получаем информацию об авторизированном пользователе
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            String email = ((User) principal).getEmail();
+            User user = userService.findUser(email);
+            return user.getCache();
+        }
+        return 0;
+    }
+
     @Override
     public void setAttribute(Model model, Authentication authentication) {
+        //установка аттрибутов
         if (isAuth(authentication)) {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
-            //получаем информацию об авторизированном пользователе
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof User) {
-                String email = ((User) principal).getEmail();
-                User user = userService.findUser(email);
-                model.addAttribute("cache", user.getCache());
-            } else {
-                model.addAttribute("cache", "error");
-            }
+            model.addAttribute("cache", getCache(model, authentication));
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);

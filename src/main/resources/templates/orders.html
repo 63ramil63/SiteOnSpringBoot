@@ -49,6 +49,12 @@
               <a th:text="${order.product.price} + 'р.'"></a>
             </td>
             <td>
+              <form method="post" th:action="@{/buyOrder}">
+                <input type="hidden" name="orderId" th:value="${order.id}">
+                <input type="submit" value="Купить">
+              </form>
+            </td>
+            <td>
               <form method="post" th:action="@{/deleteOrder}">
                 <input type="hidden" name="orderId" th:value="${order.id}">
                 <input type="submit" value="Удалить">
@@ -62,6 +68,7 @@
           <a th:text="'Итого: ' + ${count} + ' товаров Сумма: ' + ${sum}"></a>
         </div>
       </div>
+      <div th:if="${notEnoughCache}">Недостаточно денег на балансе</div>
   </div>
 </body>
 </html>

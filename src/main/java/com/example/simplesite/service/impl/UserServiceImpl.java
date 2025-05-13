@@ -36,6 +36,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void updateUserCache(String email, int newCache) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setCache(newCache);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
     public void deleteUser(String email) {
         userRepository.deleteByEmail(email);
     }
