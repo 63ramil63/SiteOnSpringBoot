@@ -28,7 +28,7 @@ public class MainController implements PageAttributeSetter {
         return authentication.getAuthorities().stream().anyMatch(element -> element.getAuthority().equals("ADMIN"));
     }
 
-    public int getCache(Model model, Authentication authentication) {
+    public int getCache(Authentication authentication) {
         //получаем информацию об авторизированном пользователе
         Object principal = authentication.getPrincipal();
         if (principal instanceof User) {
@@ -46,7 +46,7 @@ public class MainController implements PageAttributeSetter {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
-            model.addAttribute("cache", getCache(model, authentication));
+            model.addAttribute("cache", getCache(authentication));
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);
