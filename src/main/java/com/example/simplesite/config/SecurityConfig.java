@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/market", "/").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
                         .requestMatchers("/order", "/orders", "/deleteOrder", "/buyOrder", "/fillBalance", "/balance").hasAnyAuthority("ADMIN", "USER")
-                        .requestMatchers("/adminPanel", "/addProduct").hasAuthority("ADMIN"))
+                        .requestMatchers("/adminPanel", "/addProduct", "/api/productFeature").hasAuthority("ADMIN"))
                 .formLogin(form -> form
                         //настройка формы для захода в аккаунт
                         .loginPage("/login")

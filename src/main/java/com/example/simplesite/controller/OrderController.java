@@ -1,11 +1,10 @@
 package com.example.simplesite.controller;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
-import com.example.simplesite.model.Order;
-import com.example.simplesite.model.Product;
-import com.example.simplesite.model.User;
-import com.example.simplesite.service.impl.OrderServiceImpl;
-import com.example.simplesite.service.impl.UserServiceImpl;
+import com.example.simplesite.model.main.Order;
+import com.example.simplesite.model.main.User;
+import com.example.simplesite.service.main.impl.OrderServiceImpl;
+import com.example.simplesite.service.main.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -47,7 +46,7 @@ public class OrderController implements PageAttributeSetter {
         return "Email not found";
     }
 
-    public int getCache(Model model, Authentication authentication) {
+    public int getCache(Authentication authentication) {
         //получаем информацию об авторизированном пользователе
         Object principal = authentication.getPrincipal();
         if (principal instanceof User) {
@@ -64,7 +63,7 @@ public class OrderController implements PageAttributeSetter {
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
             model.addAttribute("isAuth", true);
-            model.addAttribute("cache", getCache(model, authentication));
+            model.addAttribute("cache", getCache(authentication));
         } else {
             model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);

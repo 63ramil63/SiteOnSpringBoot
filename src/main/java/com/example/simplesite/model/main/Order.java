@@ -1,4 +1,4 @@
-package com.example.simplesite.model;
+package com.example.simplesite.model.main;
 
 import jakarta.persistence.*;
 import lombok.Data;

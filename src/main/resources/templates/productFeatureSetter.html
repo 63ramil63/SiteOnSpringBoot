@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/styles/mainStyle.css}">
+</head>
+<body>
+    <div class="header">
+        <div class="headerL">
+            <div class="box">Сайт</div>
+            <div class="box"><a href="market">Главная</a></div>
+        </div>
+        <div class="headerR">
+            <div class="box" th:if="${isAdmin}"><a href="/adminPanel">Admin Panel</a></div>
+            <div class="box" th:if="${isAuth}"><a th:text="${cache} + 'р.'" href="/balance"></a></div>
+            <div class="box" th:text="${username}"></div>
+            <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
+            <div class="box" th:if="${isAuth}">
+                <form method="post" th:action="@{/logout}">
+                    <input type="submit" value="Выйти">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mainContainer">
+        <form method="post" th:action="@{/api/setFeature}">
+            <div id="features-container">
+                <!-- Здесь будут добавляться поля для features -->
+                <div class="feature-fields">
+                    <input type="text" name="features[0].key" placeholder="Key" required>
+                    <input type="text" name="features[0].value" placeholder="Value" required>
+                </div>
+            </div>
+            <div>
+                <button type="button" onclick="addFeature()">Добавить характеристику</button>
+            </div>
+            <div>
+                <input type="submit" value="Сохранить">
+            </div>
+        </form>
+    </div>
+    <script>
+        let featureCount = 1;
+
+        function addFeature() {
+            const container = document.getElementById('features-container');
+            const div = document.createElement('div');
+            div.className = 'feature-fields';
+
+            div.innerHTML = '<input type="text" name="features[${featureCount}].key" placeholder="key" required>' +
+                            '<input type="text" name"features[${featureCount}].name" placeholder="value" required>' +
+                            '<button type="button" onclick="removeFeature(this)">Удалить</button>';
+            container.append(div);
+            featureCount++;
+        }
+        function removeFeature(button) {
+            button.parentElement.remove();
+        }
+    </script>
+</body>
+</html>

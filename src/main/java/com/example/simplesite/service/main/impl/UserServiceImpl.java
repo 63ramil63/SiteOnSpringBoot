@@ -1,12 +1,10 @@
-package com.example.simplesite.service.impl;
+package com.example.simplesite.service.main.impl;
 
-import com.example.simplesite.model.Role;
-import com.example.simplesite.model.User;
-import com.example.simplesite.repository.UserRepository;
-import com.example.simplesite.service.UserService;
+import com.example.simplesite.enums.Role;
+import com.example.simplesite.model.main.User;
+import com.example.simplesite.repository.main.UserRepository;
+import com.example.simplesite.service.main.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

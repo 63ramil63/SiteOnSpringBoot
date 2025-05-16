@@ -1,7 +1,6 @@
-package com.example.simplesite.service;
+package com.example.simplesite.service.main;
 
-import com.example.simplesite.model.Order;
-import com.example.simplesite.model.Product;
+import com.example.simplesite.model.main.Order;
 
 import java.util.List;
 

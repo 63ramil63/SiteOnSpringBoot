@@ -1,6 +1,6 @@
-package com.example.simplesite.repository;
+package com.example.simplesite.repository.main;
 
-import com.example.simplesite.model.Order;
+import com.example.simplesite.model.main.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

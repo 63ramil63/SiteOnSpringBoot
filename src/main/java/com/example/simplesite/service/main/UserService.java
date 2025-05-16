@@ -1,6 +1,6 @@
-package com.example.simplesite.service;
+package com.example.simplesite.service.main;
 
-import com.example.simplesite.model.User;
+import com.example.simplesite.model.main.User;
 import jakarta.transaction.Transactional;
 
 public interface UserService {

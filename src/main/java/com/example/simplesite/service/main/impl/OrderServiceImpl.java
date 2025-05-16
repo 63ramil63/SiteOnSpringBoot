@@ -1,9 +1,9 @@
-package com.example.simplesite.service.impl;
+package com.example.simplesite.service.main.impl;
 
-import com.example.simplesite.model.Order;
-import com.example.simplesite.model.Product;
-import com.example.simplesite.repository.OrderRepository;
-import com.example.simplesite.service.OrderService;
+import com.example.simplesite.model.main.Order;
+import com.example.simplesite.model.main.Product;
+import com.example.simplesite.repository.main.OrderRepository;
+import com.example.simplesite.service.main.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

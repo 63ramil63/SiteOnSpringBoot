@@ -1,9 +1,8 @@
 package com.example.simplesite.controller;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
-import com.example.simplesite.model.Product;
-import com.example.simplesite.model.Role;
-import com.example.simplesite.service.impl.ProductServiceImpl;
+import com.example.simplesite.model.main.Product;
+import com.example.simplesite.service.main.impl.ProductServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

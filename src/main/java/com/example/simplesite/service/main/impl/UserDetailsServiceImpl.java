@@ -1,7 +1,7 @@
-package com.example.simplesite.service.impl;
+package com.example.simplesite.service.main.impl;
 
-import com.example.simplesite.model.User;
-import com.example.simplesite.repository.UserRepository;
+import com.example.simplesite.model.main.User;
+import com.example.simplesite.repository.main.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

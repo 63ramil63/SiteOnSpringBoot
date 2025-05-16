@@ -1,5 +1,6 @@
-package com.example.simplesite.model;
+package com.example.simplesite.model.main;
 
+import com.example.simplesite.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
