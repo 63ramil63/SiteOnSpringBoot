@@ -37,8 +37,8 @@ public class ProductFeatureServiceImpl implements ProductFeatureService {
     }
 
     @Override
-    public List<ProductFeature> findAllByProductId(String productId) {
-        return repository.findAll();
+    public List<ProductFeature> findAllByProductId(Long productId) {
+        return repository.findByProductId(productId);
     }
 
     @Override

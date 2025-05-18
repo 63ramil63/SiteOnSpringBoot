@@ -52,7 +52,7 @@ public class ProductController implements PageAttributeSetter {
 
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute(name = "product")Product product) {
-        productService.addProduct(product);
+        productService.saveProduct(product);
         return "redirect:/adminPanel";
     }
 }

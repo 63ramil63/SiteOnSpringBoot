@@ -13,6 +13,6 @@ public interface ProductService {
     List<Order> findProductsByType(String type);
     List<Order> findProductByCompany(String companyName);
     @Transactional
-    void addProduct(Product product);
+    void saveProduct(Product product);
     void deleteProduct(Long id);
 }

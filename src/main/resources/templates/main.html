@@ -47,6 +47,9 @@
                             </form>
                         </div>
                     </div>
+                    <div th:if="${isAdmin}">
+                        <a th:href="@{'/api/productFeature?id=' + ${product.id}}">product info</a>
+                    </div>
                 </div>
             </div>
         </div>

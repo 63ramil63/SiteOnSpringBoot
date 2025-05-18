@@ -145,3 +145,22 @@
     height: 100%;
     width: 100%;
 }
+
+/*Only to productFeatureSetter*/
+
+.formFeatureContainer {
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+#features-container {
+    border: 2px solid blue;
+    margin: 5px;
+}
+
+#features-container input {
+    height: 2em;
+}
