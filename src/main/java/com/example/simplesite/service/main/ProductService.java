@@ -10,8 +10,9 @@ import java.util.Optional;
 public interface ProductService {
     List<Product> getAllProducts();
     Optional<Product> findById(Long Id);
-    List<Order> findProductsByType(String type);
-    List<Order> findProductByCompany(String companyName);
+    List<Product> findAllByFilters(List<String> companyNames, List<String> types);
+    List<String> findDistinctTypes();
+    List<String> findDistinctCompanyNames();
     @Transactional
     void saveProduct(Product product);
     void deleteProduct(Long id);

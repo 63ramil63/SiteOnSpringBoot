@@ -1,6 +1,7 @@
 package com.example.simplesite.controller;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
+import com.example.simplesite.model.main.Product;
 import com.example.simplesite.model.main.User;
 import com.example.simplesite.service.main.impl.ProductServiceImpl;
 import com.example.simplesite.service.main.impl.UserServiceImpl;
@@ -11,7 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -52,14 +58,34 @@ public class MainController implements PageAttributeSetter {
             model.addAttribute("isAuth", false);
             model.addAttribute("isAdmin", false);
         }
-        model.addAttribute("products", productService.getAllProducts());
+        setFilterForm(model);
+    }
+
+    //установка аттрибутов для формы фильтрации
+    private void setFilterForm(Model model) {
+        model.addAttribute("types", productService.findDistinctTypes());
+        model.addAttribute("companyNames", productService.findDistinctCompanyNames());
+    }
+
+    //получение отсортированных продуктов
+    private List<Product> setProducts(List<String> companyNames, List<String> types) {
+        return productService.findAllByFilters(companyNames, types);
     }
 
 
+    //установка значений для сортировки продуктов
+    private void setCheckedFilters (Model model, List<String> selectedCompanyNames, List<String> selectedTypes) {
+        model.addAttribute("selectedCompanyNames", selectedCompanyNames != null ? selectedCompanyNames: new ArrayList<>());
+        model.addAttribute("selectedTypes", selectedTypes != null ? selectedTypes : new ArrayList<>());
+    }
+
     @GetMapping("/market")
-    public String market(Model model) {
+    public String market(Model model, @RequestParam(name = "type", required = false) List<String> selectedTypes,
+                         @RequestParam(name = "companyName", required = false) List<String> selectedCompanyNames) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         setAttribute(model, authentication);
+        setCheckedFilters(model, selectedCompanyNames, selectedTypes);
+        model.addAttribute("products", setProducts(selectedCompanyNames, selectedTypes));
         return "main";
     }
 

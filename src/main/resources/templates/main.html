@@ -26,7 +26,32 @@
         </div>
     </div>
     <div class="mainContainer">
-        <div class="sideMenu" id="firstSideMenu"></div>
+        <div class="sideMenu" id="firstSideMenu">
+            <div>
+                <form name="types" method="get" th:action="@{/market}">
+                    <a>Тип продукта</a>
+                    <div th:each="type: ${types}">
+                        <label>
+                            <!-- проверяем передаваемый список и ищем совпадения в списке и устанавливаем checked-->
+                            <input type="checkbox" name="type" th:value="${type}"
+                                   th:checked="${#lists.contains(selectedTypes, type)}"
+                                   onclick="this.form.submit()">
+                            <span th:text="${type}"></span>
+                        </label>
+                    </div>
+                    <a>Производитель</a>
+                    <div th:each="companyName: ${companyNames}">
+                        <label>
+                            <!-- проверяем передаваемый список и ищем совпадения в списке и устанавливаем checked-->
+                            <input type="checkbox" name="companyName" th:value="${companyName}"
+                                   th:checked="${#lists.contains(selectedCompanyNames, companyName)}"
+                                   onclick="this.form.submit()">
+                            <span th:text="${companyName}"></span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="sideMenu" id="secondSideMenu">
             <div class="card" th:each="product: ${products}">
                 <div class="imgContainer">

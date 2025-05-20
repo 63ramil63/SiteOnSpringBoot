@@ -1,6 +1,5 @@
 package com.example.simplesite.service.main.impl;
 
-import com.example.simplesite.model.main.Order;
 import com.example.simplesite.model.main.Product;
 import com.example.simplesite.repository.main.ProductRepository;
 import com.example.simplesite.service.main.ProductService;
@@ -27,14 +26,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Order> findProductsByType(String type) {
-        return productRepository.findAllByType(type);
+    public List<Product> findAllByFilters(List<String> companyNames, List<String> types) {
+        return productRepository.findAllByFilters(companyNames, types);
     }
 
     @Override
-    public List<Order> findProductByCompany(String companyName) {
-        return productRepository.findAllByCompanyName(companyName);
+    public List<String> findDistinctTypes() {
+        return productRepository.findDistinctTypes();
     }
+
+    @Override
+    public List<String> findDistinctCompanyNames() {
+        return productRepository.findDistinctCompanyNames();
+    }
+
 
     @Override
     public void saveProduct(Product product) {

@@ -93,8 +93,8 @@ public class ProductFeatureController implements PageAttributeSetter {
                 for (ProductFeature feature : features) {
                     feature.setProduct(product);
                     product.getFeatures().add(feature);
-                    System.err.println(feature.getParam());
                 }
+                product.getFeatures().sort(Comparator.comparing(ProductFeature::getParam));
             }
             productService.saveProduct(product);
         }
