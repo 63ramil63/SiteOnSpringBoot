@@ -1,6 +1,7 @@
 package com.example.simplesite.controller.addon;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
+import com.example.simplesite.dto.ProductDefaultInfoDTO;
 import com.example.simplesite.dto.ProductFeatureDTO;
 import com.example.simplesite.model.main.Product;
 import com.example.simplesite.model.addon.ProductFeature;
@@ -61,11 +62,23 @@ public class ProductFeatureController implements PageAttributeSetter {
         }
     }
 
+    private Product getProduct(Long id) {
+        Optional<Product> optProduct = productService.findById(id);
+        if (optProduct.isPresent()) {
+            return optProduct.get();
+        }
+        return null;
+    }
+
     private void setBodyAttributes(Model model, Long id, String type) {
+        //добавляем примеры шаблонов и продукт на страницу для редактирования основных настроек
         model.addAttribute("types", productFeatureTemplateService.findDistinctTypes());
+
+        //добавление массива доп инфы о товаре, если выбран определенный шаблон
         if (type != null) {
             List<String> features = productFeatureTemplateService.findParamsByProductType(type);
             List<ProductFeature> productFeatures = new ArrayList<>();
+            //добавляем поля названия и пустые поля значения для доп инфы
             for (String feature: features) {
                 ProductFeature pf = new ProductFeature();
                 pf.setParam(feature);
@@ -74,10 +87,15 @@ public class ProductFeatureController implements PageAttributeSetter {
             }
             model.addAttribute("productFeatures", productFeatures);
         } else {
+            //ищем уже существующие у этого продукта доп инфу
             List<ProductFeature> productFeatures = productFeatureService.findAllByProductId(id);
             model.addAttribute("productFeatures", productFeatures);
         }
-        model.addAttribute("productId", id);
+
+        Product product = getProduct(id);
+        if (product != null) {
+            model.addAttribute("product", getProduct(id));
+        }
     }
 
     @Override
@@ -112,13 +130,32 @@ public class ProductFeatureController implements PageAttributeSetter {
         //получаем из формы данные
         Long productId = form.getId();
         List<ProductFeature> features = form.getFeatures();
-        Optional<Product> optProduct = productService.findById(productId);
-        if (optProduct.isPresent()) {
-            //получаем продукт
-            Product product = optProduct.get();
+        Product product = getProduct(productId);
+        if (product != null) {
             addFeatures(product, features);
             productService.saveProduct(product);
         }
         return "redirect:/api/productFeature?id=" + productId;
+    }
+
+    private void setProductInfo(ProductDefaultInfoDTO form, Product product) {
+        product.setId(form.getId());
+        product.setName(form.getName());
+        product.setImgSrc(form.getImgSrc());
+        product.setPrice(form.getPrice());
+        product.setType(form.getType());
+        product.setCompanyName(form.getCompanyName());
+    }
+
+    @PostMapping("/api/setProductDefaultInfo")
+    public String setProductDefaultInfo(@ModelAttribute(name = "defaultInfoForm")ProductDefaultInfoDTO form) {
+        Optional<Product> optProduct = productService.findById(form.getId());
+        if (optProduct.isPresent()) {
+            Product product = optProduct.get();
+            setProductInfo(form, product);
+            productService.saveProduct(product);
+            return "redirect:/api/productFeature?id=" + form.getId();
+        }
+        return "redirect:/api/productFeature?id=" + form.getId();
     }
 }

@@ -26,17 +26,44 @@
     <div class="mainContainer">
         <div class="formFeatureContainer">
             <a th:href="@{/api/productFeatureTemplate}">Настроить шаблоны описания для продуктов</a>
-            <form method="get" th:action="@{/api/productFeature}">
-                <input type="hidden" name="id" th:value="${productId}">
+            <form method="get" th:action="@{/api/productFeature}" class="productInfoForm">
+                <input type="hidden" name="id" th:value="${product.id}">
                 <select name="type" onchange="this.form.submit()">
                     <option>Выберите шаблон</option>
                     <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
                 </select>
             </form>
-            <form method="post" th:action="@{/api/setFeature}" name="form">
-                <input type="hidden" name="id" th:value="${productId}">
+            <form method="post" th:action="@{/api/setProductDefaultInfo}" name="defaultInfoForm" class="productInfoForm">
+                <input type="hidden" name="id" th:value="${product.id}">
+                <h2>Основные характеристики</h2>
+                <div>
+                    <input value="Название: " readonly>
+                    <input type="text" name="name" th:value="${product.name}" required>
+                </div>
+                <div>
+                    <input value="Ссылка на изобр: " readonly>
+                    <input type="text" name="imgSrc" th:value="${product.imgSrc}" required>
+                </div>
+                <div>
+                    <input value="Цена: " readonly>
+                    <input type="number" name="price" th:value="${product.price}" required>
+                </div>
+                <div>
+                    <input value="Тип товара: " readonly>
+                    <input type="text" name="type" th:value="${product.type}" required>
+                </div>
+                <div>
+                    <input value="Компания: " readonly>
+                    <input type="text" name="companyName" th:value="${product.companyName}" required>
+                </div>
+                <div>
+                    <input type="submit" value="Сохранить">
+                </div>
+            </form>
+            <form method="post" th:action="@{/api/setFeature}" name="form" class="productInfoForm">
+                <input type="hidden" name="id" th:value="${product.id}">
                 <div id="features-container">
-                    <h2>Характеристики</h2>
+                    <h2>Доп. характеристики</h2>
                     <div th:each="feature, iterStat : ${productFeatures}" class="feature-fields">
                         <input type="text" th:name="'features[' + ${iterStat.index} + '].param'" th:value="${feature.param}" placeholder="Key" required autocomplete="off">
                         <input type="text" th:name="'features[' + ${iterStat.index} + '].value'" th:value="${feature.value}" placeholder="Value" required autocomplete="off">

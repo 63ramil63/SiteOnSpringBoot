@@ -159,11 +159,8 @@
 }
 
 
-#features-container input {
+.productInfoForm input {
     height: 2em;
 }
 
 
-#params-container input {
-    height: 2em;
-}
