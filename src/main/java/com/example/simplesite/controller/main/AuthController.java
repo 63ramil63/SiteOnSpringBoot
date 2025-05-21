@@ -1,4 +1,4 @@
-package com.example.simplesite.controller;
+package com.example.simplesite.controller.main;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.model.main.User;

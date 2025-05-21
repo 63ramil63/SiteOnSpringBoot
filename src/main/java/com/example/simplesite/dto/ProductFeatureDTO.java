@@ -1,6 +1,6 @@
 package com.example.simplesite.dto;
 
-import com.example.simplesite.model.main.ProductFeature;
+import com.example.simplesite.model.addon.ProductFeature;
 import lombok.Data;
 
 import java.util.List;

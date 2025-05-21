@@ -1,6 +1,6 @@
 package com.example.simplesite.service.main;
 
-import com.example.simplesite.model.main.ProductFeature;
+import com.example.simplesite.model.addon.ProductFeature;
 
 import java.util.List;
 

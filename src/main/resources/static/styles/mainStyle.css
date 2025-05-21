@@ -146,21 +146,24 @@
     width: 100%;
 }
 
-/*Only to productFeatureSetter*/
+/*Only to productFeatureSetter and productFeatureTemplateSetter*/
 
 .formFeatureContainer {
     border: 2px solid black;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 2px;
 }
 
-#features-container {
-    border: 2px solid blue;
-    margin: 5px;
-}
 
 #features-container input {
+    height: 2em;
+}
+
+
+#params-container input {
     height: 2em;
 }

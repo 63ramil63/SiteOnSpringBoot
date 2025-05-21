@@ -1,10 +1,11 @@
-package com.example.simplesite.controller;
+package com.example.simplesite.controller.addon;
 
 import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.dto.ProductFeatureDTO;
 import com.example.simplesite.model.main.Product;
-import com.example.simplesite.model.main.ProductFeature;
+import com.example.simplesite.model.addon.ProductFeature;
 import com.example.simplesite.model.main.User;
+import com.example.simplesite.service.main.ProductFeatureTemplateService;
 import com.example.simplesite.service.main.impl.ProductFeatureServiceImpl;
 import com.example.simplesite.service.main.impl.ProductServiceImpl;
 import com.example.simplesite.service.main.impl.UserServiceImpl;
@@ -27,6 +28,7 @@ public class ProductFeatureController implements PageAttributeSetter {
 
     private ProductServiceImpl productService;
     private ProductFeatureServiceImpl productFeatureService;
+    private ProductFeatureTemplateService productFeatureTemplateService;
     private UserServiceImpl userService;
 
     public int getCache(Authentication authentication) {
@@ -59,9 +61,22 @@ public class ProductFeatureController implements PageAttributeSetter {
         }
     }
 
-    private void setBodyAttributes(Model model, Long id) {
-        List<ProductFeature> productFeatures = productFeatureService.findAllByProductId(id);
-        model.addAttribute("productFeatures", productFeatures);
+    private void setBodyAttributes(Model model, Long id, String type) {
+        model.addAttribute("types", productFeatureTemplateService.findDistinctTypes());
+        if (type != null) {
+            List<String> features = productFeatureTemplateService.findParamsByProductType(type);
+            List<ProductFeature> productFeatures = new ArrayList<>();
+            for (String feature: features) {
+                ProductFeature pf = new ProductFeature();
+                pf.setParam(feature);
+                pf.setValue("");
+                productFeatures.add(pf);
+            }
+            model.addAttribute("productFeatures", productFeatures);
+        } else {
+            List<ProductFeature> productFeatures = productFeatureService.findAllByProductId(id);
+            model.addAttribute("productFeatures", productFeatures);
+        }
         model.addAttribute("productId", id);
     }
 
@@ -71,11 +86,25 @@ public class ProductFeatureController implements PageAttributeSetter {
     }
 
     @GetMapping("/api/productFeature")
-    public String productFeature(Model model, @RequestParam(name = "id") Long productId) {
+    public String productFeature(Model model, @RequestParam(name = "id") Long productId,
+                                 @RequestParam(name = "type", required = false) String type) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         setAttribute(model, authentication);
-        setBodyAttributes(model, productId);
+        setBodyAttributes(model, productId, type);
         return "productFeatureSetter";
+    }
+
+    private void addFeatures(Product product, List<ProductFeature> features) {
+        //проверяем не пустое ли значение доп атрибутов
+        product.getFeatures().clear();
+        if (features != null) {
+            for (ProductFeature feature : features) {
+                feature.setProduct(product);
+                product.getFeatures().add(feature);
+            }
+            //сортируем по алфавиту
+            product.getFeatures().sort(Comparator.comparing(ProductFeature::getParam));
+        }
     }
 
     @PostMapping("/api/setFeature")
@@ -87,15 +116,7 @@ public class ProductFeatureController implements PageAttributeSetter {
         if (optProduct.isPresent()) {
             //получаем продукт
             Product product = optProduct.get();
-            //проверяем не пустое ли значение доп атрибутов
-            product.getFeatures().clear();
-            if (features != null) {
-                for (ProductFeature feature : features) {
-                    feature.setProduct(product);
-                    product.getFeatures().add(feature);
-                }
-                product.getFeatures().sort(Comparator.comparing(ProductFeature::getParam));
-            }
+            addFeatures(product, features);
             productService.saveProduct(product);
         }
         return "redirect:/api/productFeature?id=" + productId;

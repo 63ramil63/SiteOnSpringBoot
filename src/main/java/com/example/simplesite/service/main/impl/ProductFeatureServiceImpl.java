@@ -1,11 +1,10 @@
 package com.example.simplesite.service.main.impl;
 
 import com.example.simplesite.model.main.Product;
-import com.example.simplesite.model.main.ProductFeature;
+import com.example.simplesite.model.addon.ProductFeature;
 import com.example.simplesite.repository.main.ProductFeatureRepository;
 import com.example.simplesite.repository.main.ProductRepository;
 import com.example.simplesite.service.main.ProductFeatureService;
-import com.example.simplesite.service.main.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

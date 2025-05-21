@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/styles/mainStyle.css}">
+</head>
+<body>
+  <div class="header">
+    <div class="headerL">
+      <div class="box">Сайт</div>
+      <div class="box"><a th:href="@{/market}">Главная</a></div>
+    </div>
+    <div class="headerR">
+      <div class="box" th:if="${isAdmin}"><a th:href="@{/adminPanel}">Admin Panel</a></div>
+      <div class="box" th:if="${isAuth}"><a th:text="${cache} + 'р.'" th:href="@{/balance}"></a></div>
+      <div class="box" th:text="${username}"></div>
+      <div class="box" th:if="${!isAuth}"><a th:href="@{/login}">Войти</a></div>
+      <div class="box" th:if="${isAuth}">
+        <form method="post" th:action="@{/logout}">
+          <input type="submit" value="Выйти">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="mainContainer">
+    <div class="formFeatureContainer">
+      <div>
+        <form method="get" name="selectForm" th:action="@{/api/productFeatureTemplate}">
+          <select name="type" onchange="this.form.submit()">
+            <option>Выберите пресет</option>
+            <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
+          </select>
+        </form>
+      </div>
+      <form method="post" th:action="@{/api/setProductFeatureTemplate}" name="productFeatureTemplateDTO">
+        <div>
+          <input type="text" name="type" th:value="${typeName}" placeholder="type" required>
+        </div>
+        <div id="params-container">
+          <div class="param-fields" th:each="parameter, iterStat : ${params}">
+            <input type="text" th:name="'params[' + ${iterStat.index} + ']'" th:value="${parameter}" placeholder="param" required>
+            <button type="button" onclick="removeParam(this)">Удалить</button>
+          </div>
+        </div>
+        <div>
+          <button type="button" onclick="addParam()">Добавить характеристику</button>
+        </div>
+        <div>
+          <input type="submit" value="Сохранить">
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    let featureCount;
+    window.onload = function () {
+      const exitingFeatures = document.querySelectorAll('.param-fields');
+      featureCount = exitingFeatures.length;
+    };
+    function addParam() {
+      const container = document.getElementById('params-container');
+      const index = featureCount;
+      const div = document.createElement('div');
+      div.className = 'param-fields';
+      div.innerHTML = '<input type="text" name="params[' + index + ']" placeholder="Key" required autocomplete="off">' +
+                      '<button type="button" onclick="removeParam(this)">Удалить</button>';
+      container.appendChild(div);
+      featureCount++;
+    }
+
+    function removeParam(button) {
+      button.parentElement.remove();
+      const remainingParams = document.querySelectorAll('.param-fields');
+      featureCount = remainingParams.length;
+
+      remainingParams.forEach((div, index) => {
+        const input = div.querySelector('input');
+        input.setAttribute('name', 'param[' + index + ']');
+      });
+    }
+  </script>
+</body>
+</html>

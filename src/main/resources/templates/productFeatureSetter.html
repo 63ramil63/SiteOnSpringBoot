@@ -25,6 +25,14 @@
     </div>
     <div class="mainContainer">
         <div class="formFeatureContainer">
+            <a th:href="@{/api/productFeatureTemplate}">Настроить шаблоны описания для продуктов</a>
+            <form method="get" th:action="@{/api/productFeature}">
+                <input type="hidden" name="id" th:value="${productId}">
+                <select name="type" onchange="this.form.submit()">
+                    <option>Выберите шаблон</option>
+                    <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
+                </select>
+            </form>
             <form method="post" th:action="@{/api/setFeature}" name="form">
                 <input type="hidden" name="id" th:value="${productId}">
                 <div id="features-container">
@@ -72,7 +80,6 @@
 
             // Обновляем имена у оставшихся элементов
             remainingFeatures.forEach((div, index) => {
-                console.log(index);
                 const inputs = div.querySelectorAll('input');
                 inputs[0].setAttribute('name', 'features[' + index + '].param');
                 inputs[1].setAttribute('name', 'features[' + index + '].value');

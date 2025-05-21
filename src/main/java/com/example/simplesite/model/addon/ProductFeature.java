@@ -1,5 +1,6 @@
-package com.example.simplesite.model.main;
+package com.example.simplesite.model.addon;
 
+import com.example.simplesite.model.main.Product;
 import jakarta.persistence.*;
 import lombok.Data;
 

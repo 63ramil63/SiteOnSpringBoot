@@ -1,8 +1,8 @@
 package com.example.simplesite.model.main;
 
+import com.example.simplesite.model.addon.ProductFeature;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.context.annotation.Lazy;
 
 import java.util.ArrayList;
 import java.util.List;

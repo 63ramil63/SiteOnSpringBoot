@@ -1,6 +1,6 @@
 package com.example.simplesite.repository.main;
 
-import com.example.simplesite.model.main.ProductFeature;
+import com.example.simplesite.model.addon.ProductFeature;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
