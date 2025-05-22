@@ -97,4 +97,13 @@
             //перенаправление обратно на страницу установки параметров
             return "redirect:/api/productFeatureTemplate?type=" + type;
         }
+
+        @PostMapping("/api/deleteProductFeatureTemplate")
+        public String deleteProductFeatureTemplate(@RequestParam(name = "type") String type) {
+            if (type != null) {
+                ProductFeatureTemplate productFeatureTemplate = productFeatureTemplateService.findProductFeatureTemplateByType(type);
+                productFeatureTemplateService.deleteProductFeatureTemplateByType(type);
+            }
+            return "redirect:/api/productFeatureTemplate";
+        }
     }

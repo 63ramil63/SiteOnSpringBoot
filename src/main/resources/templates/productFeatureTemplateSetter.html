@@ -28,14 +28,15 @@
       <div>
         <form method="get" name="selectForm" th:action="@{/api/productFeatureTemplate}">
           <select name="type" onchange="this.form.submit()">
-            <option>Выберите пресет</option>
+            <option>Изменить пресет</option>
             <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
           </select>
         </form>
       </div>
       <form method="post" th:action="@{/api/setProductFeatureTemplate}" name="productFeatureTemplateDTO">
         <div>
-          <input type="text" name="type" th:value="${typeName}" placeholder="type" required>
+          <label>Пресет</label>
+          <input type="text" name="type" th:value="${typeName}" placeholder="Название шаблона" required>
         </div>
         <div id="params-container">
           <div class="param-fields" th:each="parameter, iterStat : ${params}">
@@ -48,6 +49,12 @@
         </div>
         <div>
           <input type="submit" value="Сохранить">
+        </div>
+      </form>
+      <form method="post" th:action="@{/api/deleteProductFeatureTemplate}" th:if="${typeName}" class="deleteForm">
+        <input type="hidden" name="type" th:value="${typeName}">
+        <div>
+          <input type="submit" value="Удалить текущий пресет">
         </div>
       </form>
     </div>
@@ -76,7 +83,7 @@
 
       remainingParams.forEach((div, index) => {
         const input = div.querySelector('input');
-        input.setAttribute('name', 'param[' + index + ']');
+        input.setAttribute('name', 'params[' + index + ']');
       });
     }
   </script>

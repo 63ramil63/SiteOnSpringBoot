@@ -158,9 +158,20 @@
     padding: 2px;
 }
 
+.formFeatureContainer form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .productInfoForm input {
     height: 2em;
+}
+
+.deleteForm {
+    margin-top: 10px;
 }
 
 
