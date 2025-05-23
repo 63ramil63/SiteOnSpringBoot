@@ -174,4 +174,21 @@
     margin-top: 10px;
 }
 
+/*only to productPage*/
 
+.productCard {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+}
+.productCard img {
+    width: 400px;
+    height: 400px;
+}
+
+#productInfoMenu {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+
+}

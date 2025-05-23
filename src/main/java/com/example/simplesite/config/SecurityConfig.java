@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         //доступ к страницам и ресурсам проекта
                         .requestMatchers("/register", "/registerForm", "/login").anonymous()
-                        .requestMatchers("/market", "/").permitAll()
+                        .requestMatchers("/market", "/", "/productPage").permitAll()
                         .requestMatchers("/styles/**", "/images/**").permitAll()
                         .requestMatchers("/order", "/orders", "/deleteOrder", "/buyOrder", "/fillBalance", "/balance").hasAnyAuthority("ADMIN", "USER")
                         .requestMatchers("/adminPanel", "/addProduct", "/api/**").hasAuthority("ADMIN"))

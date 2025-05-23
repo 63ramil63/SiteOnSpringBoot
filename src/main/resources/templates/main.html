@@ -59,7 +59,7 @@
                 </div>
                 <div class="info">
                     <div class="textInfo">
-                        <a th:text="${product.name}"></a>
+                        <a th:text="${product.name}" th:href="@{/productPage(productId=${product.id})}"></a>
                     </div>
                     <div class="cardBottom">
                         <div>
