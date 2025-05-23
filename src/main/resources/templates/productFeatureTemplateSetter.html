@@ -48,6 +48,7 @@
           <button type="button" onclick="addParam()">Добавить характеристику</button>
         </div>
         <div>
+          <a th:href="@{/api/productFeatureTemplate}">Сбросить пресет</a>
           <input type="submit" value="Сохранить">
         </div>
       </form>
@@ -55,6 +56,9 @@
         <input type="hidden" name="type" th:value="${typeName}">
         <div>
           <input type="submit" value="Удалить текущий пресет">
+        </div>
+        <div class="error" th:if="${deleteError}">
+          Ошибка удаления!
         </div>
       </form>
     </div>

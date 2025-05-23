@@ -75,11 +75,13 @@
         }
 
         @GetMapping("/api/productFeatureTemplate")
-        public String productFeatureTemplate(Model model, @RequestParam(name = "type", required = false) String type) {
+        public String productFeatureTemplate(Model model, @RequestParam(name = "type", required = false) String type,
+                                             @RequestParam(name = "deleteError", required = false) boolean deleteError) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             setAttribute(model, authentication);
             model.addAttribute("typeName", type != null ? type : "");
             model.addAttribute("params", type != null ? setParams(type): new ArrayList<>());
+            model.addAttribute("deleteError", deleteError);
             return "productFeatureTemplateSetter";
         }
 
@@ -101,9 +103,9 @@
         @PostMapping("/api/deleteProductFeatureTemplate")
         public String deleteProductFeatureTemplate(@RequestParam(name = "type") String type) {
             if (type != null) {
-                ProductFeatureTemplate productFeatureTemplate = productFeatureTemplateService.findProductFeatureTemplateByType(type);
                 productFeatureTemplateService.deleteProductFeatureTemplateByType(type);
+                return "redirect:/api/productFeatureTemplate";
             }
-            return "redirect:/api/productFeatureTemplate";
+            return "redirect:/api/productFeatureTemplate?deleteError=true";
         }
     }
