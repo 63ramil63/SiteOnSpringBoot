@@ -62,8 +62,8 @@
             </form>
             <form method="post" th:action="@{/api/setFeature}" name="form" class="productInfoForm">
                 <input type="hidden" name="id" th:value="${product.id}">
+                <h2>Доп. характеристики</h2>
                 <div id="features-container">
-                    <h2>Доп. характеристики</h2>
                     <div th:each="feature, iterStat : ${productFeatures}" class="feature-fields">
                         <input type="text" th:name="'features[' + ${iterStat.index} + '].param'" th:value="${feature.param}" placeholder="Key" required autocomplete="off">
                         <input type="text" th:name="'features[' + ${iterStat.index} + '].value'" th:value="${feature.value}" placeholder="Value" required autocomplete="off">
