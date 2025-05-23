@@ -36,7 +36,8 @@
       <form method="post" th:action="@{/api/setProductFeatureTemplate}" name="productFeatureTemplateDTO">
         <div>
           <label>Пресет</label>
-          <input type="text" name="type" th:value="${typeName}" placeholder="Название шаблона" required>
+          <input type="text" name="type" th:value="${typeName}" placeholder="Название шаблона" required
+                 pattern="[A-Za-z\s]+" title="Пожалуйста, используйте только английские буквы.">
         </div>
         <div id="params-container">
           <div class="param-fields" th:each="parameter, iterStat : ${params}">
