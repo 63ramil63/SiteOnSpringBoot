@@ -102,7 +102,7 @@ public class OrderController implements PageAttributeSetter {
         if (referer != null) {
             //добавляем аттрибут added
             String redirectURL = UriComponentsBuilder.fromUriString(referer)
-                    .queryParam("added", "true")
+                    .replaceQueryParam("added", "true")
                     .build()
                     .toUriString();
             return "redirect:" + redirectURL;
@@ -124,7 +124,7 @@ public class OrderController implements PageAttributeSetter {
 
     @PostMapping("/buyOrder")
     @Transactional
-    public String buyOrder(@RequestParam(name = "orderId") Long productId, RedirectAttributes redirectAttributes) {
+    public String buyOrder(@RequestParam(name = "orderId") Long productId) {
         //получаем пользователя по его email
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = getUserEmail(authentication);
@@ -139,7 +139,7 @@ public class OrderController implements PageAttributeSetter {
             if (user.getCache() >= price) {
                 user.setCache(user.getCache() - price);
                 orderService.deleteOrder(order.getId());
-                return "redirect:/orders";
+                return "redirect:/orders?buyOrder=true";
             }
         }
         return "redirect:/orders?notEnoughCache=true";
@@ -147,7 +147,7 @@ public class OrderController implements PageAttributeSetter {
 
     @PostMapping("/deleteOrder")
     @Transactional
-    public String deleteOrder(@RequestParam(name = "orderId") Long orderId) {
+        public String deleteOrder(@RequestParam(name = "orderId") Long orderId) {
         orderService.deleteOrder(orderId);
         return "redirect:/orders";
     }

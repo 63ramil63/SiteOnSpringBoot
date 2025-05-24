@@ -68,7 +68,50 @@
           <a th:text="'Итого: ' + ${count} + ' товаров Сумма: ' + ${sum}"></a>
         </div>
       </div>
-      <div th:if="${notEnoughCache}">Недостаточно денег на балансе</div>
+      <div id="notification" style="
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 128, 0, 0.6);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 1000;">
+        Товар куплен!
+      </div>
+      <div id="errorNotification" style="
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(165, 42, 42, 0.6);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 1000;">
+        Недостаточно средств на балансе!
+      </div>
   </div>
+  <script>
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('buyOrder') === 'true') {
+        const notification = document.getElementById('notification');
+        notification.style.display = 'block';
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 2000);
+      } else if (urlParams.get('notEnoughCache') === 'true') {
+        const notification = document.getElementById('errorNotification');
+        notification.style.display = 'block';
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 2000)
+      }
+    }
+  </script>
 </body>
 </html>
