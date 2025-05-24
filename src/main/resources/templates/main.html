@@ -79,5 +79,30 @@
             </div>
         </div>
     </div>
+    <div id="notification" style="
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 1000;">
+        Товар добавлен в корзину!
+    </div>
+    <script>
+        window.onload = function() {
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('added') === 'true') {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(() => {
+              notification.style.display = 'none';
+            }, 5000);
+          }
+        }
+    </script>
 </body>
 </html>

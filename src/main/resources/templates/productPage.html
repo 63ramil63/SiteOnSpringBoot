@@ -12,7 +12,9 @@
       <div class="box"><a href="market">Главная</a></div>
     </div>
     <div class="headerR">
-      <div class="box" th:if="${isAdmin}"><a href="/adminPanel">ADMIN PANEL</a></div>
+      <div class="box" th:if="${isAdmin}"><a href="/adminPanel">Admin Panel</a></div>
+      <div class="box" th:if="${isAuth}"><a href="/orders">Корзина</a></div>
+      <div class="box" th:if="${isAuth}"><a th:text="${cache} + 'р.'" href="/balance"></a></div>
       <div class="box" th:text="${username}"></div>
       <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
       <div class="box" th:if="${isAuth}">
@@ -33,9 +35,13 @@
         </div>
         <div>
           <p th:text="${product.name}"></p>
-          <p th:text="${product.type}"></p>
-          <p th:text="${product.companyName}"></p>
-          <p th:text="${product.price}"></p>
+          <p th:text="'Тип: ' + ${product.type}"></p>
+          <p th:text="'Производитель: ' + ${product.companyName}"></p>
+          <p th:text="'Цена: ' + ${product.price}"></p>
+          <form name="orderProduct" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
+            <input type="hidden" name="productId" th:value="${product.Id}">
+            <input type="submit" value="buy">
+          </form>
         </div>
       </div>
       <div>
@@ -46,5 +52,30 @@
       </div>
     </div>
   </div>
+  <div id="notification" style="
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      z-index: 1000;">
+    Товар добавлен в корзину!
+  </div>
+  <script>
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('added') === 'true') {
+        const notification = document.getElementById('notification');
+        notification.style.display = 'block';
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 5000);
+      }
+    }
+  </script>
 </body>
 </html>

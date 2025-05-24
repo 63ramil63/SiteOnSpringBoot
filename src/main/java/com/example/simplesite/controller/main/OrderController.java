@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +99,14 @@ public class OrderController implements PageAttributeSetter {
         orderService.addOrder(email, Long.parseLong(productId));
         // получает значение заголовка Referer, который указывает на URL-адрес страницы, с которой был сделан текущий запрос
         String referer = request.getHeader("Referer");
+        if (referer != null) {
+            //добавляем аттрибут added
+            String redirectURL = UriComponentsBuilder.fromUriString(referer)
+                    .queryParam("added", "true")
+                    .build()
+                    .toUriString();
+            return "redirect:" + redirectURL;
+        }
         return "redirect:" + referer;
     }
 

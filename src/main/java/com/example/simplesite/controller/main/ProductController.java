@@ -3,8 +3,10 @@ package com.example.simplesite.controller.main;
 import com.example.simplesite.attributesetter.PageAttributeSetter;
 import com.example.simplesite.model.addon.ProductFeature;
 import com.example.simplesite.model.main.Product;
+import com.example.simplesite.model.main.User;
 import com.example.simplesite.service.main.impl.ProductFeatureServiceImpl;
 import com.example.simplesite.service.main.impl.ProductServiceImpl;
+import com.example.simplesite.service.main.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +26,17 @@ public class ProductController implements PageAttributeSetter {
 
     private final ProductServiceImpl productService;
     private final ProductFeatureServiceImpl productFeatureService;
+    private final UserServiceImpl userService;
+
+    private int getCache(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            String email = ((User) principal).getEmail();
+            User user = userService.findUser(email);
+            return user.getCache();
+        }
+        return 0;
+    }
 
     @Override
     public boolean isAuth(Authentication authentication) {
@@ -41,6 +54,7 @@ public class ProductController implements PageAttributeSetter {
             model.addAttribute("isAuth", true);
             model.addAttribute("username", authentication.getName());
             model.addAttribute("isAdmin", isAdmin(authentication));
+            model.addAttribute("cache", getCache(authentication));
         } else {
             model.addAttribute("isAuth", false);
             model.addAttribute("username", "Не авторизован");
