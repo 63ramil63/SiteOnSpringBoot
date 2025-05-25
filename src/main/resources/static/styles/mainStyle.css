@@ -58,7 +58,13 @@
 }
 
 #secondSideMenu {
+    flex-direction: column;
     width: 80%;
+}
+
+#cardContainer {
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
 }
 

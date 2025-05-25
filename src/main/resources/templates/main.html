@@ -60,27 +60,29 @@
                     <option value="byPriceDesc" th:selected="${selectedSort == 'byPriceDesc'}">По убыванию</option>
                 </select>
             </div>
-            <div class="card" th:each="product: ${products}">
-                <div class="imgContainer">
-                    <img th:src="${product.imgSrc}" id="image">
-                </div>
-                <div class="info">
-                    <div class="textInfo">
-                        <a th:text="${product.name}" th:href="@{/productPage(productId=${product.id})}"></a>
+            <div id="cardContainer">
+                <div class="card" th:each="product: ${products}">
+                    <div class="imgContainer">
+                        <img th:src="${product.imgSrc}" id="image">
                     </div>
-                    <div class="cardBottom">
-                        <div>
-                            <a th:text="${product.price}"></a>
+                    <div class="info">
+                        <div class="textInfo">
+                            <a th:text="${product.name}" th:href="@{/productPage(productId=${product.id})}"></a>
                         </div>
-                        <div>
-                            <form name="orderProduct" method="post" th:action="@{/order}">
-                                <input type="hidden" name="productId" th:value="${product.Id}">
-                                <input type="submit" value="buy">
-                            </form>
+                        <div class="cardBottom">
+                            <div>
+                                <a th:text="${product.price}"></a>
+                            </div>
+                            <div>
+                                <form name="orderProduct" method="post" th:action="@{/order}">
+                                    <input type="hidden" name="productId" th:value="${product.Id}">
+                                    <input type="submit" value="buy">
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <div th:if="${isAdmin}">
-                        <a th:href="@{'/api/productFeature?id=' + ${product.id}}">product info</a>
+                        <div th:if="${isAdmin}">
+                            <a th:href="@{'/api/productFeature?id=' + ${product.id}}">product info</a>
+                        </div>
                     </div>
                 </div>
             </div>
