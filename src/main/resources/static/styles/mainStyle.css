@@ -73,8 +73,8 @@
     flex-direction: column;
     width: 15vw;
     height: 20vw;
-    min-width: 240px;
-    min-height: 300px;
+    min-width: 300px;
+    min-height: 400px;
     border-width: 1px;
     border-style: solid;
     border-color: blue;
@@ -93,7 +93,6 @@
 
 #image {
     width: 200px;
-    height: 200px;
     border-width: 1px;
 }
 
