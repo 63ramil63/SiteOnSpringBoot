@@ -2,8 +2,11 @@ package com.example.simplesite.service.main.impl;
 
 import com.example.simplesite.model.main.Product;
 import com.example.simplesite.repository.main.ProductRepository;
+import com.example.simplesite.repository.main.addon.ProductSpecification;
 import com.example.simplesite.service.main.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +28,19 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(Id);
     }
 
-    @Override
-    public List<Product> findAllByFilters(List<String> companyNames, List<String> types) {
-        return productRepository.findAllByFilters(companyNames, types);
+    public List<Product> getFilteredProducts(List<String> companyNames, List<String> types, String sortDirection) {
+        Specification<Product> spec = Specification.where(ProductSpecification.filterByCompanyName(companyNames)
+                .and(ProductSpecification.filterByType(types)));
+        Sort sort = Sort.by("price");
+        if (sortDirection != null) {
+            if ("byPriceDesc".equalsIgnoreCase(sortDirection)) {
+                sort = sort.descending();
+            } else {
+                sort = sort.ascending();
+            }
+            return productRepository.findAll(spec, sort);
+        }
+        return productRepository.findAll(spec);
     }
 
     @Override

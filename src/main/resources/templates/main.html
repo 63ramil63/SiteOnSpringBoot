@@ -53,6 +53,13 @@
             </div>
         </div>
         <div class="sideMenu" id="secondSideMenu">
+            <div id="sortDiv">
+                <select id="sortSelect">
+                    <option value="" th:selected="${selectedSort == null}">По умолчанию</option>
+                    <option value="byPriceAsc" th:selected="${selectedSort == 'byPriceAsc'}">По возрастанию</option>
+                    <option value="byPriceDesc" th:selected="${selectedSort == 'byPriceDesc'}">По убыванию</option>
+                </select>
+            </div>
             <div class="card" th:each="product: ${products}">
                 <div class="imgContainer">
                     <img th:src="${product.imgSrc}" id="image">
@@ -103,6 +110,16 @@
             }, 5000);
           }
         }
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            const selectedValue = this.value;
+            const url = new URL(window.location.href);
+            if (selectedValue) {
+                url.searchParams.set('sort', selectedValue);
+            } else {
+                url.searchParams.delete('sort');
+            }
+            window.location.href = url.toString();
+        });
     </script>
 </body>
 </html>

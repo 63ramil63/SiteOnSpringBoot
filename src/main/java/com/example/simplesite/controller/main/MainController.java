@@ -67,10 +67,14 @@ public class MainController implements PageAttributeSetter {
     }
 
     //получение отсортированных продуктов
-    private List<Product> setProducts(List<String> companyNames, List<String> types) {
-        return productService.findAllByFilters(companyNames, types);
+    private List<Product> setProducts(List<String> companyNames, List<String> types, String sort) {
+        return productService.getFilteredProducts(companyNames, types, sort);
     }
 
+    //передаем значение сортировки на страницу для настройки списка
+    private void setSorts(Model model, String selectedSort) {
+        model.addAttribute("selectedSort", selectedSort);
+    }
 
     //установка значений для сортировки продуктов
     private void setCheckedFilters (Model model, List<String> selectedCompanyNames, List<String> selectedTypes) {
@@ -80,11 +84,13 @@ public class MainController implements PageAttributeSetter {
 
     @GetMapping("/market")
     public String market(Model model, @RequestParam(name = "type", required = false) List<String> selectedTypes,
-                         @RequestParam(name = "companyName", required = false) List<String> selectedCompanyNames) {
+                         @RequestParam(name = "companyName", required = false) List<String> selectedCompanyNames,
+                         @RequestParam(name = "sort", required = false) String selectedSort) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         setAttribute(model, authentication);
+        setSorts(model, selectedSort);
         setCheckedFilters(model, selectedCompanyNames, selectedTypes);
-        model.addAttribute("products", setProducts(selectedCompanyNames, selectedTypes));
+        model.addAttribute("products", setProducts(selectedCompanyNames, selectedTypes, selectedSort));
         return "main";
     }
 

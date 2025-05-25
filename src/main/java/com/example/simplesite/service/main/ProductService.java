@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface ProductService {
     List<Product> getAllProducts();
     Optional<Product> findById(Long Id);
-    List<Product> findAllByFilters(List<String> companyNames, List<String> types);
     List<String> findDistinctTypes();
     List<String> findDistinctCompanyNames();
     @Transactional
