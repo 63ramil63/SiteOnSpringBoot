@@ -86,6 +86,9 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <button th:each="pageNumber: ${pageNumbers}" th:value="${pageNumber}" onclick="loadPage(this)" th:text="${pageNumber}"></button>
+            </div>
         </div>
     </div>
     <div id="notification" style="
@@ -122,6 +125,16 @@
             }
             window.location.href = url.toString();
         });
+        function loadPage(button) {
+            const value = button.value;
+            if (!value || value === 'undefined') {
+                // Не делайте ничего или задайте дефолтное значение
+                return;
+            }
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', value);
+            window.location.href = url.toString();
+        }
     </script>
 </body>
 </html>
