@@ -35,7 +35,6 @@
         </div>
         <div>
           <p th:text="${product.name}"></p>
-          <p th:text="'Тип: ' + ${product.type}"></p>
           <p th:text="'Производитель: ' + ${product.companyName}"></p>
           <p th:text="'Цена: ' + ${product.price}"></p>
           <form name="orderProduct" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
