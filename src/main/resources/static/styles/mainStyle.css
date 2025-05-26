@@ -3,6 +3,11 @@
     margin: 0px;
     padding: 0px;
 }
+
+html, body {
+    height: 100%;
+}
+
 .header {
     display: flex;
     width: 100%;
@@ -39,6 +44,7 @@
 .mainContainer {
     display: flex;
     width: 99%;
+    min-height: 90vh;
     margin: 5px 5px 5px 0.5%;
     border-width: 2px;
     border-style: solid;
@@ -60,6 +66,7 @@
 #secondSideMenu {
     flex-direction: column;
     width: 80%;
+    justify-content: space-between;
 }
 
 #cardContainer {
@@ -195,5 +202,15 @@
     width: 80%;
     display: flex;
     flex-direction: column;
+}
 
+.pageButtonDiv {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pageButton {
+    padding: 5px;
+    font-size: 20px;
 }
