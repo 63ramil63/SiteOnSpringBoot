@@ -89,7 +89,9 @@
                 </div>
             </div>
             <div class="pageButtonDiv">
+                <button class="pageButton" onclick="quickJumpToPage(-1)"><-</button>
                 <button class="pageButton" th:each="pageNumber: ${pageNumbers}" th:value="${pageNumber}" onclick="loadPage(this)" th:text="${pageNumber}"></button>
+                <button class="pageButton" onclick="quickJumpToPage(1)">-></button>
             </div>
         </div>
     </div>
@@ -136,6 +138,22 @@
             const url = new URL(window.location.href);
             url.searchParams.set('page', value);
             window.location.href = url.toString();
+        }
+        function quickJumpToPage(value) {
+            const div = document.querySelector('.pageButtonDiv');
+            const lastPageNumber = div.childNodes[div.children.length].textContent;
+            const url = new URL(window.location.href);
+            const currentPage = url.searchParams.get('page');
+            if (currentPage != 1 && currentPage != lastPageNumber) {
+                url.searchParams.set('page', +currentPage + +value);
+                window.location.href = url.toString();
+            } else if (currentPage == 1 && currentPage != lastPageNumber && value == 1) {
+                url.searchParams.set('page', +currentPage + +value);
+                window.location.href = url.toString();
+            } else if (currentPage != 1 && currentPage == lastPageNumber && value == -1) {
+                url.searchParams.set('page', +currentPage + +value);
+                window.location.href = url.toString();
+            }
         }
     </script>
 </body>
