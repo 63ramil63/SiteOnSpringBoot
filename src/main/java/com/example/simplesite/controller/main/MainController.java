@@ -73,11 +73,13 @@ public class MainController implements PageAttributeSetter {
 
         //добавляем первую страницу
         pageNumbers.add(1);
+        System.err.println(pageNumber + "-----------------pageNumber");
+        System.err.println(totalPages + "-----------------totalPages");
 
         int start = Math.max(2, pageNumber - 2);
         int end = Math.min((int) totalPages - 1, pageNumber + 2);
 
-        for (int i = start; i < end; i++) {
+        for (int i = start; i <= end; i++) {
             pageNumbers.add(i);
         }
 
