@@ -109,8 +109,8 @@ public class MainController implements PageAttributeSetter {
     }
 
     //получение отсортированных продуктов
-    private List<Product> setProducts(List<String> companyNames, List<String> types, String sort, int pageNumber) {
-        return productService.getFilteredProducts(companyNames, types, sort, pageNumber);
+    private List<Product> setProducts(String name, List<String> companyNames, List<String> types, String sort, int pageNumber) {
+        return productService.getFilteredProducts(name, companyNames, types, sort, pageNumber);
     }
 
     //передаем значение сортировки на страницу для настройки списка
@@ -124,20 +124,27 @@ public class MainController implements PageAttributeSetter {
         model.addAttribute("selectedTypes", selectedTypes != null ? selectedTypes : new ArrayList<>());
     }
 
+    private void setSearchValue(Model model, String value) {
+        model.addAttribute("searchInput", value != null ? value : "");
+    }
+
     @GetMapping("/market")
     public String market(Model model, @RequestParam(name = "type", required = false) List<String> selectedTypes,
                          @RequestParam(name = "companyName", required = false) List<String> selectedCompanyNames,
                          @RequestParam(name = "sort", required = false) String selectedSort,
-                         @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageNumber) {
+                         @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageNumber,
+                         @RequestParam(name = "search", required = false) String value) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         setAttribute(model, authentication);
         //устанавливаем, какой option будет выбран у select изначально
         setSorts(model, selectedSort);
         //устанавливаем, какие checkbox будут уже отмеченными
         setCheckedFilters(model, selectedCompanyNames, selectedTypes);
+        //передаем значение поиска
+        setSearchValue(model, value);
         setPageButtons(model, selectedCompanyNames, selectedTypes, pageNumber);
         //устанавливаем параметры для сортировки продукта и получаем продукты
-        model.addAttribute("products", setProducts(selectedCompanyNames, selectedTypes, selectedSort, pageNumber));
+        model.addAttribute("products", setProducts(value, selectedCompanyNames, selectedTypes, selectedSort, pageNumber));
         return "main";
     }
 

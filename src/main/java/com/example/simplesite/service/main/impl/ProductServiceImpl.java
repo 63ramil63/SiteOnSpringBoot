@@ -45,11 +45,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.count(spec);
     }
 
-    public List<Product> getFilteredProducts(List<String> companyNames, List<String> types, String sortDirection, int pageNumber) {
+    public List<Product> getFilteredProducts(String name,List<String> companyNames, List<String> types, String sortDirection, int pageNumber) {
         //отсчет идет с 0
         pageNumber = pageNumber - 1;
         Specification<Product> spec = Specification.where(ProductSpecification.filterByCompanyName(companyNames)
-                .and(ProductSpecification.filterByType(types)));
+                .and(ProductSpecification.filterByType(types)).and(ProductSpecification.filterByName(name)));
         Sort sort = Sort.by("price");
         if (sortDirection != null) {
             if ("byPriceDesc".equalsIgnoreCase(sortDirection)) {

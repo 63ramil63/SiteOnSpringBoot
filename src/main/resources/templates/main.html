@@ -29,6 +29,8 @@
         <div class="sideMenu" id="firstSideMenu">
             <div>
                 <form name="types" method="get" th:action="@{/market}">
+                    <input id="hiddenSearch" type="hidden" name="search" th:value="${searchInput}">
+                    <input id="hiddenSort" type="hidden" name="sort" th:value="${selectedSort}">
                     <a>Тип продукта</a>
                     <div th:each="type: ${types}">
                         <label>
@@ -60,6 +62,10 @@
                         <option value="byPriceAsc" th:selected="${selectedSort == 'byPriceAsc'}">По возрастанию</option>
                         <option value="byPriceDesc" th:selected="${selectedSort == 'byPriceDesc'}">По убыванию</option>
                     </select>
+
+                    <input id="search" type="text" placeholder="Начните поиск продукта" th:value="${searchInput}">
+                    <button onclick="search()">Поиск</button>
+
                 </div>
                 <div id="cardContainer">
                     <div class="card" th:each="product: ${products}">
@@ -119,6 +125,7 @@
             }, 5000);
           }
         }
+
         document.getElementById('sortSelect').addEventListener('change', function() {
             const selectedValue = this.value;
             const url = new URL(window.location.href);
@@ -129,6 +136,7 @@
             }
             window.location.href = url.toString();
         });
+
         function loadPage(button) {
             const value = button.value;
             if (!value || value === 'undefined') {
@@ -139,6 +147,7 @@
             url.searchParams.set('page', value);
             window.location.href = url.toString();
         }
+
         function quickJumpToPage(value) {
             const div = document.querySelector('.pageButtonDiv');
             const lastPageNumber = div.childNodes[div.children.length].textContent;
@@ -154,6 +163,19 @@
                 url.searchParams.set('page', +currentPage + +value);
                 window.location.href = url.toString();
             }
+        }
+
+        function search() {
+            const search = document.getElementById('search');
+            const hiddenSearch = document.getElementById('hiddenSearch');
+            hiddenSearch.value = search.value;
+            const form = document.forms['types'];
+            form.submit();
+        }
+
+        function submitType() {
+            const search = document.getElementById('search');
+            const hiddenSearch = document.getElementById('hiddenSearch');
         }
     </script>
 </body>
