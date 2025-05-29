@@ -6,6 +6,7 @@ import com.example.simplesite.repository.main.ProductRepository;
 import com.example.simplesite.repository.main.addon.ProductSpecification;
 import com.example.simplesite.service.main.ProductService;
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.criteria.Expression;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,11 +58,30 @@ public class ProductServiceImpl implements ProductService {
             } else {
                 sort = sort.ascending();
             }
+            //выбираем ровно опред кол-во записей из бд(productsPerPage), указывая сортировку и номер страницы
             Pageable pageable = PageRequest.of(pageNumber, productsPerPage, sort);
             return productRepository.findAll(spec, pageable).getContent();
         }
         Pageable pageable = PageRequest.of(pageNumber, productsPerPage);
         return productRepository.findAll(spec, pageable).getContent();
+    }
+
+    public List<Product> getFilteredProducts(Long excludeId, String companyNames, String types) {
+        List<String> companyNamesArr = List.of(companyNames);
+        List<String> typesArr = List.of(types);
+        Specification<Product> spec = Specification.where(ProductSpecification.filterByType(typesArr)
+                .and((root, query, criteriaBuilder) ->
+                        //исключаем продукт из списка
+                        criteriaBuilder.notEqual(root.get("id"), excludeId)
+                ));
+        Pageable pageable = PageRequest.of(0, 20);
+
+        //сортируем по названию компаний, сначала идут компании одной фирмы
+        return productRepository.findAll((root, query, criteriaBuilder) -> {
+            Expression<Boolean> expr = criteriaBuilder.and(root.get("companyName").in(companyNamesArr));
+            query.orderBy(criteriaBuilder.desc(expr));
+            return spec.toPredicate(root, query, criteriaBuilder);
+        }, pageable).getContent();
     }
 
     @Override

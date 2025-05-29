@@ -91,6 +91,11 @@ public class ProductController implements PageAttributeSetter {
         return new ArrayList<>();
     }
 
+    private void setRecommendedProducts(Model model, Product product) {
+        List<Product> rProducts = productService.getFilteredProducts(product.getId(), product.getCompanyName(), product.getType());
+        model.addAttribute("rProducts", (rProducts != null) ? rProducts : new ArrayList<>());
+    }
+
     @GetMapping("/productPage")
     public String productPage(Model model, @RequestParam(name = "productId") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -99,6 +104,7 @@ public class ProductController implements PageAttributeSetter {
         if (product != null) {
             model.addAttribute("product", product);
             model.addAttribute("features", getFeatures(id));
+            setRecommendedProducts(model, product);
             return "productPage";
         }
         return "redirect:/market";

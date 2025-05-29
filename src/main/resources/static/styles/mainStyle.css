@@ -60,12 +60,12 @@ html, body {
 }
 
 #firstSideMenu {
-    width: 15vw;
+    width: 20vw;
 }
 
 #secondSideMenu {
     flex-direction: column;
-    width: 85vw;
+    width: 80vw;
     justify-content: space-between;
 }
 
@@ -196,7 +196,6 @@ html, body {
 }
 .productCard img {
     width: 400px;
-    height: 400px;
 }
 
 #productInfoMenu {
@@ -214,4 +213,36 @@ html, body {
 .pageButton {
     padding: 5px;
     font-size: 20px;
+}
+
+#imageContainer {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.rProductContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.rProductCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rImageContainer {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+}
+
+.rImageContainer img{
+    width: 200px;
+    border-width: 1px;
 }

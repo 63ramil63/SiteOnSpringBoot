@@ -13,4 +13,4 @@ spring:
       hibernate:
         format_sql: true
 params:
-  productsPerPage: 8
+  productsPerPage: 10

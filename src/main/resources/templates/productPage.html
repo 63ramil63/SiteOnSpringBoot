@@ -27,6 +27,22 @@
   <div class="mainContainer">
     <div class="sideMenu" id="firstSideMenu">
 
+      <div class="rProductContainer">
+        <h2>Похожее</h2>
+        <div class="rProductCard" th:each="rProduct: ${rProducts}">
+          <div class="rImageContainer">
+            <img th:src="${rProduct.imgSrc}" alt="product image">
+          </div>
+          <div>
+            <a th:text="${rProduct.name}" th:href="@{/productPage(productId=${rProduct.id})}"></a>
+            <p th:text="'Цена: ' + ${rProduct.price}"></p>
+          </div>
+          <form name="orderProduct1" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
+            <input type="hidden" name="productId" th:value="${rProduct.id}">
+            <input type="submit" value="buy">
+          </form>
+        </div>
+      </div>
     </div>
     <div class="sideMenu" id="productInfoMenu">
       <div class="productCard">
@@ -38,7 +54,7 @@
           <p th:text="'Производитель: ' + ${product.companyName}"></p>
           <p th:text="'Цена: ' + ${product.price}"></p>
           <form name="orderProduct" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
-            <input type="hidden" name="productId" th:value="${product.Id}">
+            <input type="hidden" name="productId" th:value="${product.id}">
             <input type="submit" value="buy">
           </form>
         </div>
