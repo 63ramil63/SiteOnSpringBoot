@@ -153,6 +153,9 @@
             const lastPageNumber = div.childNodes[div.children.length].textContent;
             const url = new URL(window.location.href);
             const currentPage = url.searchParams.get('page');
+            if (!currentPage) {
+                currentPage = 1;
+            }
             if (currentPage != 1 && currentPage != lastPageNumber) {
                 url.searchParams.set('page', +currentPage + +value);
                 window.location.href = url.toString();
