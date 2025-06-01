@@ -283,3 +283,11 @@ body {
     width: 200px;
     border-width: 1px;
 }
+
+.sideDiv {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    max-width: 80%;
+    min-width: 80%;
+}

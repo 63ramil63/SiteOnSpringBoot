@@ -32,9 +32,13 @@
           <div class="rImageContainer">
             <img th:src="${rProduct.imgSrc}" alt="product image">
           </div>
-          <div>
-            <a class="link" th:text="${rProduct.name}" th:href="@{/productPage(productId=${rProduct.id})}"></a>
-            <p th:text="'Цена: ' + ${rProduct.price}"></p>
+          <div class="sideDiv">
+            <div>
+              <a class="link" th:text="${rProduct.name}" th:href="@{/productPage(productId=${rProduct.id})}"></a>
+            </div>
+            <div>
+              <a th:text="'Цена: ' + ${rProduct.price}"></a>
+            </div>
           </div>
           <form name="orderProduct1" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
             <input type="hidden" name="productId" th:value="${rProduct.id}">
