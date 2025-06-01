@@ -8,12 +8,38 @@ html, body {
     height: 100%;
 }
 
+body {
+    background: radial-gradient(circle, #F5FFFA, #F0FFFF)
+}
+
+.link {
+    color: black;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #808080 !important;
+}
+
+.link:visited {
+    color: black;
+}
+
+
+
+#exit {
+    background: none;
+    border: none;
+    padding: 0;
+}
+
 .header {
+    background-color: #DCDCDC;
     display: flex;
     width: 100%;
     border-width: 2px;
     border-style: solid;
-    border-color: black;
+    border-color: gray;
     border-image: initial;
     justify-content: space-between;
 }
@@ -35,10 +61,6 @@ html, body {
     align-items: center;
     justify-content: center;
     margin: 0px 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: gray;
-    border-image: initial;
 }
 
 .mainContainer {
@@ -48,10 +70,11 @@ html, body {
     margin: 5px 5px 5px 0.5%;
     border-width: 2px;
     border-style: solid;
-    border-color: black;
+    border-color: gray;
 }
 
 .sideMenu {
+    background-color: #DCDCDC;
     display: flex;
     border-width: 1px;
     border-style: solid;
@@ -69,8 +92,18 @@ html, body {
     justify-content: space-between;
 }
 
+#sortDiv {
+    padding-left: 0.75%;
+    background: #D3D3D3;
+    display: flex;
+    gap: 30%;
+}
+
+#search {
+    height: 30px;
+}
+
 #cardContainer {
-    border: 2px solid red;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -79,23 +112,22 @@ html, body {
 .card {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 18.5%;
     height: 20vw;
     min-width: 200px;
     min-height: 400px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: blue;
     margin: 0.75%;
+    border: 1px solid gray;
 }
 
 .imgContainer {
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    border: 3px solid black;
     height: 200px;
 }
 
@@ -105,15 +137,15 @@ html, body {
 }
 
 .info {
-    height: 180px;
+    min-height: 180px;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     margin: 0px;
     padding: 5px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
+    background-color: white;
 }
 
 .textInfo {
@@ -130,6 +162,11 @@ html, body {
     min-height: 50px;
     justify-content: space-between;
     align-items: center;
+}
+
+.orderButton {
+    height: 40px;
+    width: 40px;
 }
 
 
@@ -216,6 +253,7 @@ html, body {
 }
 
 #imageContainer {
+    background-color: white;
     width: 400px;
     height: 400px;
     display: flex;

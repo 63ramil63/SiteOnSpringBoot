@@ -9,24 +9,23 @@
   <div class="header">
     <div class="headerL">
       <div class="box">Сайт</div>
-      <div class="box"><a href="market">Главная</a></div>
+      <div class="box"><a class="link" href="market">Главная</a></div>
     </div>
     <div class="headerR">
-      <div class="box" th:if="${isAdmin}"><a href="/adminPanel">Admin Panel</a></div>
-      <div class="box" th:if="${isAuth}"><a href="/orders">Корзина</a></div>
-      <div class="box" th:if="${isAuth}"><a th:text="${cache} + 'р.'" href="/balance"></a></div>
+      <div class="box" th:if="${isAdmin}"><a class="link" href="/adminPanel">Admin Panel</a></div>
+      <div class="box" th:if="${isAuth}"><a class="link" href="/orders">Корзина</a></div>
+      <div class="box" th:if="${isAuth}"><a class="link" th:text="${cache} + 'р.'" href="/balance"></a></div>
       <div class="box" th:text="${username}"></div>
-      <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
+      <div class="box" th:if="${!isAuth}"><a class="link" href="/login">Войти</a></div>
       <div class="box" th:if="${isAuth}">
         <form method="post" th:action="@{/logout}">
-          <input type="submit" value="Выйти">
+          <input id="exit" type="submit" value="Выйти">
         </form>
       </div>
     </div>
   </div>
   <div class="mainContainer">
     <div class="sideMenu" id="firstSideMenu">
-
       <div class="rProductContainer">
         <h2>Похожее</h2>
         <div class="rProductCard" th:each="rProduct: ${rProducts}">
@@ -34,12 +33,12 @@
             <img th:src="${rProduct.imgSrc}" alt="product image">
           </div>
           <div>
-            <a th:text="${rProduct.name}" th:href="@{/productPage(productId=${rProduct.id})}"></a>
+            <a class="link" th:text="${rProduct.name}" th:href="@{/productPage(productId=${rProduct.id})}"></a>
             <p th:text="'Цена: ' + ${rProduct.price}"></p>
           </div>
           <form name="orderProduct1" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
             <input type="hidden" name="productId" th:value="${rProduct.id}">
-            <input type="submit" value="buy">
+            <input type="submit" class="orderButton" value="&#128722">
           </form>
         </div>
       </div>
@@ -55,7 +54,7 @@
           <p th:text="'Цена: ' + ${product.price}"></p>
           <form name="orderProduct" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
             <input type="hidden" name="productId" th:value="${product.id}">
-            <input type="submit" value="buy">
+            <input type="submit" class="orderButton" value="&#128722">
           </form>
         </div>
       </div>

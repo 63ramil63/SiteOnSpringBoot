@@ -9,12 +9,12 @@
   <div class="header">
     <div class="headerL">
       <div class="box">Сайт</div>
-      <div class="box"><a href="market">Главная</a></div>
+      <div class="box"><a class="link" href="market">Главная</a></div>
     </div>
     <div class="headerR">
-      <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
-      <div class="box" th:if="${isAuth}">
-        <form method="post" th:action="@{/logout}">
+      <div class="box" th:if="${!isAuth}"><a class="link" href="/login">Войти</a></div>
+      <div class="box"  th:if="${isAuth}">
+        <form method="post" id="exit" th:action="@{/logout}">
           <input type="submit" value="Выйти">
         </form>
       </div>
@@ -39,7 +39,7 @@
           <input type="submit" value="register">
         </div>
         <div>
-          <a>Есть аккаунт? </a><a href="/login">Войти</a>
+          <a>Есть аккаунт? </a><a class="link" href="/login">Войти</a>
         </div>
       </form>
     </div>

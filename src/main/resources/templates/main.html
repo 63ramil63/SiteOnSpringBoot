@@ -10,17 +10,17 @@
     <div class="header">
         <div class="headerL">
             <div class="box">Сайт</div>
-            <div class="box"><a href="market">Главная</a></div>
+            <div class="box"><a class="link" href="market">Главная</a></div>
         </div>
         <div class="headerR">
-            <div class="box" th:if="${isAdmin}"><a href="/adminPanel">Admin Panel</a></div>
-            <div class="box" th:if="${isAuth}"><a href="/orders">Корзина</a></div>
-            <div class="box" th:if="${isAuth}"><a th:text="${cache} + 'р.'" href="/balance"></a></div>
+            <div class="box" th:if="${isAdmin}"><a class="link" href="/adminPanel">Admin Panel</a></div>
+            <div class="box" th:if="${isAuth}"><a class="link" href="/orders">Корзина</a></div>
+            <div class="box" th:if="${isAuth}"><a class="link" th:text="${cache} + 'р.'" href="/balance"></a></div>
             <div class="box" th:text="${username}"></div>
-            <div class="box" th:if="${!isAuth}"><a href="/login">Войти</a></div>
+            <div class="box" th:if="${!isAuth}"><a class="link" href="/login">Войти</a></div>
             <div class="box" th:if="${isAuth}">
                 <form method="post" th:action="@{/logout}">
-                    <input type="submit" value="Выйти">
+                    <input id="exit" class="link" type="submit" value="Выйти">
                 </form>
             </div>
         </div>
@@ -62,10 +62,10 @@
                         <option value="byPriceAsc" th:selected="${selectedSort == 'byPriceAsc'}">По возрастанию</option>
                         <option value="byPriceDesc" th:selected="${selectedSort == 'byPriceDesc'}">По убыванию</option>
                     </select>
-
-                    <input id="search" type="text" placeholder="Начните поиск продукта" th:value="${searchInput}">
-                    <button onclick="search()">Поиск</button>
-
+                    <div>
+                        <input id="search" type="text" placeholder="Начните поиск продукта" th:value="${searchInput}">
+                        <button onclick="search()">🔍</button>
+                    </div>
                 </div>
                 <div id="cardContainer">
                     <div class="card" th:each="product: ${products}">
@@ -74,30 +74,30 @@
                         </div>
                         <div class="info">
                             <div class="textInfo">
-                                <a th:text="${product.name}" th:href="@{/productPage(productId=${product.id})}"></a>
+                                <a th:text="${product.name}" class="link" th:href="@{/productPage(productId=${product.id})}"></a>
                             </div>
                             <div class="cardBottom">
                                 <div>
-                                    <a th:text="${product.price}"></a>
+                                    <h3 th:text="${product.price}"></h3>
                                 </div>
                                 <div>
                                     <form name="orderProduct" method="post" th:action="@{/order}">
                                         <input type="hidden" name="productId" th:value="${product.Id}">
-                                        <input type="submit" value="buy">
+                                        <input class="orderButton" type="submit" value="&#128722">
                                     </form>
                                 </div>
                             </div>
                             <div th:if="${isAdmin}">
-                                <a th:href="@{'/api/productFeature?id=' + ${product.id}}">product info</a>
+                                <a class="link" th:href="@{'/api/productFeature?id=' + ${product.id}}">product info</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="pageButtonDiv">
-                <button class="pageButton" onclick="quickJumpToPage(-1)"><-</button>
+                <button class="pageButton" onclick="quickJumpToPage(-1)">←</button>
                 <button class="pageButton" th:each="pageNumber: ${pageNumbers}" th:value="${pageNumber}" onclick="loadPage(this)" th:text="${pageNumber}"></button>
-                <button class="pageButton" onclick="quickJumpToPage(1)">-></button>
+                <button class="pageButton" onclick="quickJumpToPage(1)">→</button>
             </div>
         </div>
     </div>
