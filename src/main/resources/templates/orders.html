@@ -25,7 +25,7 @@
   </div>
     <div class="mainContainer">
       <div class="sideMenu" id="secondSideMenu">
-        <table border="1">
+        <table border="1" th:if="${hasOrder}">
           <tr>
             <td colspan="2"><a>Наименование</a></td>
             <td><a>Тип товара</a></td>
@@ -62,6 +62,9 @@
             </td>
           </tr>
         </table>
+        <div th:if="${!hasOrder}">
+          <h3>Нет активных заказов!</h3>
+        </div>
       </div>
       <div class="sideMenu" id="firstSideMenu">
         <div>

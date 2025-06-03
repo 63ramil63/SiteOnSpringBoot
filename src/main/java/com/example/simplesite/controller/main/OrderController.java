@@ -78,7 +78,12 @@ public class OrderController implements PageAttributeSetter {
         List<Order> orders = orderService.getOrdersByEmail(email);
         int count = orders.size();
         int sum = orders.stream().mapToInt(order -> order.getProduct().getPrice()).sum();
-        model.addAttribute("orders", orders);
+        if (orders.isEmpty()) {
+            model.addAttribute("hasOrder", false);
+        } else {
+            model.addAttribute("hasOrder", true);
+            model.addAttribute("orders", orders);
+        }
         model.addAttribute("count", count);
         model.addAttribute("sum", sum);
     }
