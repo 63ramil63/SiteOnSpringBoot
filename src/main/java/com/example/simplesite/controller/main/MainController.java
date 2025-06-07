@@ -99,7 +99,6 @@ public class MainController implements PageAttributeSetter {
             model.addAttribute("isAdmin", isAdmin(authentication));
             model.addAttribute("cache", getCache(authentication));
         } else {
-            model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);
             model.addAttribute("isAdmin", false);
         }

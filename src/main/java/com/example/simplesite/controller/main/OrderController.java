@@ -66,7 +66,6 @@ public class OrderController implements PageAttributeSetter {
             model.addAttribute("isAuth", true);
             model.addAttribute("cache", getCache(authentication));
         } else {
-            model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAuth", false);
             model.addAttribute("isAdmin", false);
         }

@@ -14,7 +14,7 @@
     <div class="headerR">
       <div class="box" th:if="${isAdmin}"><a class="link" href="/adminPanel">Admin Panel</a></div>
       <div class="box" th:if="${isAuth}" th:text="${cache} + 'р.'"></div>
-      <div class="box" th:text="${username}"></div>
+      <div class="box" th:if="${isAuth}" th:text="${username}"></div>
       <div class="box" th:if="${!isAuth}"><a class="link" href="/login">Войти</a></div>
       <div class="box" th:if="${isAuth}">
         <form method="post" th:action="@{/logout}">

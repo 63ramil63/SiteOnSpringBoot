@@ -267,9 +267,11 @@ body {
 }
 
 .rProductCard {
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: white;
 }
 
 .rImageContainer {

@@ -57,7 +57,6 @@ public class ProductController implements PageAttributeSetter {
             model.addAttribute("cache", getCache(authentication));
         } else {
             model.addAttribute("isAuth", false);
-            model.addAttribute("username", "Не авторизован");
             model.addAttribute("isAdmin", false);
         }
     }

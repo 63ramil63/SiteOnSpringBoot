@@ -15,7 +15,7 @@
       <div class="box" th:if="${isAdmin}"><a class="link" href="/adminPanel">Admin Panel</a></div>
       <div class="box" th:if="${isAuth}"><a class="link" href="/orders">Корзина</a></div>
       <div class="box" th:if="${isAuth}"><a class="link" th:text="${cache} + 'р.'" href="/balance"></a></div>
-      <div class="box" th:text="${username}"></div>
+      <div class="box" th:if="${isAuth}" th:text="${username}"></div>
       <div class="box" th:if="${!isAuth}"><a class="link" href="/login">Войти</a></div>
       <div class="box" th:if="${isAuth}">
         <form method="post" th:action="@{/logout}">
@@ -40,10 +40,6 @@
               <a th:text="'Цена: ' + ${rProduct.price}"></a>
             </div>
           </div>
-          <form name="orderProduct1" method="post" th:action="@{/order}" onsubmit="showNotification(); return true;">
-            <input type="hidden" name="productId" th:value="${rProduct.id}">
-            <input type="submit" class="orderButton" value="&#128722">
-          </form>
         </div>
       </div>
     </div>
