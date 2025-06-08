@@ -49,19 +49,20 @@
           <button type="button" onclick="addParam()">Добавить характеристику</button>
         </div>
         <div>
-          <a class="link" th:href="@{/api/productFeatureTemplate}">Сбросить пресет</a>
+          <button onclick="reloadPage()">Сбросить</button>
           <input type="submit" value="Сохранить">
         </div>
       </form>
-      <form method="post" th:action="@{/api/deleteProductFeatureTemplate}" th:if="${typeName}" class="deleteForm">
-        <input type="hidden" name="type" th:value="${typeName}">
-        <div>
+      <div>
+        <form method="post" th:action="@{/api/deleteProductFeatureTemplate}" th:if="${typeName}" class="deleteForm">
+          <input type="hidden" name="type" th:value="${typeName}">
           <input type="submit" value="Удалить текущий пресет">
-        </div>
-        <div class="error" th:if="${deleteError}">
-          Ошибка удаления!
-        </div>
-      </form>
+
+        </form>
+      </div>
+      <div class="error" th:if="${deleteError}">
+        Ошибка удаления!
+      </div>
     </div>
   </div>
   <script>
@@ -90,6 +91,12 @@
         const input = div.querySelector('input');
         input.setAttribute('name', 'params[' + index + ']');
       });
+    }
+
+    function reloadPage() {
+      const url = new URL(window.location.href);
+      url.searchParams.set('type', '');
+      window.location.href = url.toString();
     }
   </script>
 </body>
